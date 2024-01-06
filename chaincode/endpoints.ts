@@ -132,7 +132,7 @@ async function newSigner(): Promise<Signer> {
  * This type of transaction would typically only be run once by an application the first time it was started after its
  * initial deployment. A new version of the chaincode deployed later would likely not need to run an "init" function.
  */
-async function initLedger(contract: Contract): Promise<void> {
+export async function initLedger(contract: Contract): Promise<void> {
     console.log('\n--> Submit Transaction: InitLedger, function creates the initial set of assets on the ledger');
 
     await contract.submitTransaction('InitLedger');
@@ -143,7 +143,7 @@ async function initLedger(contract: Contract): Promise<void> {
 /**
  * Evaluate a transaction to query ledger state.
  */
-async function getAllFiles(contract: Contract): Promise<void> {
+export async function getAllFiles(contract: Contract): Promise<string> {
     console.log('\n--> Evaluate Transaction: GetAllAssets, function returns all the current assets on the ledger');
 
     const resultBytes = await contract.evaluateTransaction('GetAllFiles');
@@ -151,12 +151,13 @@ async function getAllFiles(contract: Contract): Promise<void> {
     const resultJson = utf8Decoder.decode(resultBytes);
     const result = JSON.parse(resultJson);
     console.log('*** Result:', result);
+    return resultJson
 }
 
 /**
  * Submit a transaction synchronously, blocking until it has been committed to the ledger.
  */
-async function createFile(contract: Contract, file: FileParams ): Promise<void> {
+export async function createFile(contract: Contract, file: FileParams ): Promise<boolean> {
     console.log('\n--> Submit Transaction: Createfile, creates new file with ID, Color, Size, Owner and AppraisedValue arguments');
 
     await contract.submitTransaction(
@@ -167,6 +168,8 @@ async function createFile(contract: Contract, file: FileParams ): Promise<void> 
     );
 
     console.log('*** Transaction committed successfully');
+
+    return true
     
 }
 
@@ -174,7 +177,7 @@ async function createFile(contract: Contract, file: FileParams ): Promise<void> 
  * Submit transaction asynchronously, allowing the application to process the smart contract response (e.g. update a UI)
  * while waiting for the commit notification.
  */
-async function transferFileAsync(contract: Contract, id: string, newOwner: string ): Promise<void> {
+export async function transferFileAsync(contract: Contract, id: string, newOwner: string ): Promise<Asset> {
     console.log('\n--> Async Submit Transaction: TransferAsset, updates existing asset owner');
 
     const commit = await contract.submitAsync('TransferFile', {
@@ -191,9 +194,11 @@ async function transferFileAsync(contract: Contract, id: string, newOwner: strin
     }
 
     console.log('*** Transaction committed successfully');
+
+    return JSON.parse(oldOwner)
 }
 
-async function readFileByID(contract: Contract, id: string): Promise<Asset> {
+export async function readFileByID(contract: Contract, id: string): Promise<Asset> {
     console.log('\n--> Evaluate Transaction: ReadAsset, function returns asset attributes');
 
     const resultBytes = await contract.evaluateTransaction('ReadAsset', id);
@@ -208,7 +213,7 @@ async function readFileByID(contract: Contract, id: string): Promise<Asset> {
 /**
  * submitTransaction() will throw an error containing details of any error responses from the smart contract.
  */
-async function updateNonExistentAsset(contract: Contract): Promise<void>{
+export async function updateNonExistentAsset(contract: Contract): Promise<void>{
     console.log('\n--> Submit Transaction: UpdateAsset asset70, asset70 does not exist and should return an error');
 
     try {
