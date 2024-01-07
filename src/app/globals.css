@@ -17,24 +17,14 @@
 }
 
 body {
-  background-image: url(bg.jpeg.jpg);
-  
   color: rgb(207, 217, 217);
-  /* color: rgb(var(--foreground-rgb)); */
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    ) */
-    /* rgb(var(--background-start-rgb)); */
-    
-    /* Set background properties */
+
   background-size: cover; /* Adjust to 'contain' or '100% 100%' based on preference */
   background-position: center; /* Adjust as needed */
   background-repeat: no-repeat; /* Adjust as needed */
 
   /* Set text color */
-  color: #f7eded; /* Adjust the text color to be readable on the background */
+  color: #060000; /* Adjust the text color to be readable on the background */
 
   /* Add other styles as needed */
   font-family: 'Arial', sans-serif; /* Set the font family */

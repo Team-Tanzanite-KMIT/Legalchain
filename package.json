@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hyperledger/fabric-gateway": "^1.1.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
     "i18next": "^23.7.11",
@@ -21,8 +22,7 @@
     "next-translate": "^2.6.2",
     "react": "latest",
     "react-dom": "latest",
-    "react-i18next": "^13.5.0",
-    "@hyperledger/fabric-gateway": "^1.1.1"
+    "react-i18next": "^13.5.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

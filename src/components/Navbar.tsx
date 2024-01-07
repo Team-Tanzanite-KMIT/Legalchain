@@ -15,15 +15,15 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="flex gap-10 items-center ${isActive ? 'text-[#909090]' : 'text-[#484848]'}`">
-          <Link href="/dashboard">
+          {/* <Link href="/dashboard">
             <li>Dashboard</li>
-          </Link>
+          </Link> */}
           {!session ? (
             <>
-              <Link href="/roles">
+              <Link href="/login">
                 <li>Login</li>
               </Link>
-              <Link href="/role_reg">
+              <Link href="/register">
                 <li>Register</li>
               </Link>
             </>

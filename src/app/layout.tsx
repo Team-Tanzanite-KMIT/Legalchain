@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
+import Head from "next/head";
 
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/utils/SessionProvider";
@@ -25,6 +25,10 @@ export default async function RootLayout({
       <body className={inter.className}>
         <SessionProvider session={session}>
           <div className="mx-auto max-w-5xl text-2xl gap-2 mb-10">
+          <Head>
+       
+        <link rel="icon" href="/favicon.ico" />
+        </Head>
             <Navbar />
             {children}
           </div>
