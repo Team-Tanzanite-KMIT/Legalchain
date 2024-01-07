@@ -10,7 +10,7 @@ const Register = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const [selectedOption, setSelectedOption] = useState<"client" | "lawyer" | "judge" | undefined>(
+  const [role, setRole] = useState<"client" | "lawyer" | "judge" | undefined>(
     undefined
   );
 
@@ -27,8 +27,8 @@ const Register = () => {
     return emailRegex.test(email);
   };
 
-  const handleOptionChange = (e: any) => {
-    setSelectedOption(e.target.value);
+  const handleRoleChange = (e: any) => {
+    setRole(e.target.value);
   };
 
   const handleSubmit = async (e: any) => {
@@ -42,7 +42,7 @@ const Register = () => {
     } else if (!password || password.length < 8) {
       setError("Password is invalid");
       return;
-    } else if (!selectedOption || selectedOption.length === 0) {
+    } else if (!role || role.length === 0) {
       setError("Select a role to register");
       return;
     }
@@ -56,7 +56,7 @@ const Register = () => {
         body: JSON.stringify({
           email: email,
           password: password,
-          role: selectedOption
+          role: role
         })
       });
       if (res.status === 400) {
@@ -64,13 +64,7 @@ const Register = () => {
       } else if (res.status === 200) {
         setError("");
 
-        if (selectedOption === "client") {
-          router.push("/client-dashboard");
-        } else if (selectedOption === "lawyer") {
-          router.push("/lawyer-dashboard");
-        } else if (selectedOption === "judge") {
-          router.push("/judge-dashboard");
-        }
+        router.push(`/${role}-dashboard`);
       }
     } catch (error) {
       setError("Error, try again");
@@ -103,8 +97,8 @@ const Register = () => {
 
             <select
               name="loginType"
-              value={selectedOption}
-              onChange={handleOptionChange}
+              value={role}
+              onChange={handleRoleChange}
               className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
             >
               <option value="" selected disabled hidden>
