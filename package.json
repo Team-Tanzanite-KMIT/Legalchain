@@ -11,6 +11,7 @@
   "dependencies": {
     "@hyperledger/fabric-gateway": "^1.1.1",
     "bcryptjs": "^2.4.3",
+    "chaincode": "file:./chaincode",
     "dotenv": "^16.3.1",
     "i18next": "^23.7.11",
     "mongoose": "^7.5.3",
