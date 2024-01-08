@@ -18,17 +18,12 @@
 
 body {
   color: rgb(207, 217, 217);
-
-  background-size: cover; /* Adjust to 'contain' or '100% 100%' based on preference */
-  background-position: center; /* Adjust as needed */
-  background-repeat: no-repeat; /* Adjust as needed */
-
-  /* Set text color */
-  color: #060000; /* Adjust the text color to be readable on the background */
-
-  /* Add other styles as needed */
-  font-family: 'Arial', sans-serif; /* Set the font family */
-  font-size: 16px; /* Set the default font size */
-  line-height: 1.5; /* Set the line height */
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  color: #060000; 
+  font-family: 'Arial', sans-serif; 
+  font-size: 16px; 
+  line-height: 1.5; 
   margin: 0;
 }
