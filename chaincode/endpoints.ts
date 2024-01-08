@@ -177,13 +177,13 @@ export async function createFile(contract: Contract, file: FileParams ): Promise
  * Submit transaction asynchronously, allowing the application to process the smart contract response (e.g. update a UI)
  * while waiting for the commit notification.
  */
-export async function transferFileAsync(contract: Contract, id: string, newOwner: string ): Promise<Asset> {
+export async function transferFileAsync(contract: Contract, id: string, newOwner: string ): Promise<string> {
     console.log('\n--> Async Submit Transaction: TransferAsset, updates existing asset owner');
 
     const commit = await contract.submitAsync('TransferFile', {
         arguments: [id, newOwner],
     });
-    const oldOwner = utf8Decoder.decode(commit.getResult());
+    const oldOwner: Asset = JSON.parse(utf8Decoder.decode(commit.getResult()));
 
     console.log(`*** Successfully submitted transaction to transfer ownership from ${oldOwner} to ${newOwner}`);
     console.log('*** Waiting for transaction commit');
@@ -195,7 +195,7 @@ export async function transferFileAsync(contract: Contract, id: string, newOwner
 
     console.log('*** Transaction committed successfully');
 
-    return JSON.parse(oldOwner)
+    return oldOwner.Owner
 }
 
 export async function readFileByID(contract: Contract, id: string): Promise<Asset> {
