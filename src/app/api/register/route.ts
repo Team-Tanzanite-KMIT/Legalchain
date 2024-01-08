@@ -4,7 +4,12 @@ import bcrypt from "bcryptjs";
 import { NextResponse, NextRequest } from "next/server";
 
 export const POST = async (request: NextRequest) => {
-  const req = await request.json();
+  const req: {
+    email: string,
+    password: string,
+    role: string
+  } = await request.json();
+  
   const { email, password, role } = req
 
   console.log(role, "⬅️");
