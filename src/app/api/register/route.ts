@@ -3,14 +3,14 @@ import connect from "@/utils/db";
 import bcrypt from "bcryptjs";
 import { NextResponse, NextRequest } from "next/server";
 
-export const POST = async (request: NextRequest) => {
+export async function POST(request: NextRequest) {
   const req: {
-    email: string,
-    password: string,
-    role: string
+    email: string;
+    password: string;
+    role: string;
   } = await request.json();
-  
-  const { email, password, role } = req
+
+  const { email, password, role } = req;
 
   console.log(role, "⬅️");
 
@@ -25,7 +25,7 @@ export const POST = async (request: NextRequest) => {
   const hashedPassword = await bcrypt.hash(password, 5);
   const newUser = new User({
     email: email,
-    password: hashedPassword,
+    password: hashedPassword
   });
 
   try {
@@ -33,7 +33,7 @@ export const POST = async (request: NextRequest) => {
     return new NextResponse("user is registered", { status: 200 });
   } catch (err: any) {
     return new NextResponse(err, {
-      status: 500,
+      status: 500
     });
   }
 };

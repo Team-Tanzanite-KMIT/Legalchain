@@ -2,11 +2,9 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signIn ,useSession } from "next-auth/react";
 
-import { signIn } from "next-auth/react";
-
-const Register = () => {
+export default function Register() {
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -134,5 +132,3 @@ const Register = () => {
     )
   );
 };
-
-export default Register;
