@@ -4,7 +4,7 @@ import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const Login = () => {
+export default function Login() {
   const router = useRouter();
   const [error, setError] = useState("");
   // const session = useSession();
@@ -94,5 +94,3 @@ const Login = () => {
     )
   );
 };
-
-export default Login;

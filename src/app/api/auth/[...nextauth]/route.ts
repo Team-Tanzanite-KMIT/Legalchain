@@ -7,27 +7,21 @@ import  { User,createSpecificUserModel } from "@/models/User";
 
 import connect from "@/utils/db";
 
-
-
-export const authOptions: any = {
-
+const authOptions: any = {
   providers: [
     CredentialsProvider({
       id: "credentials",
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
+        password: { label: "Password", type: "password" }
       },
       async authorize(credentials: any) {
         await connect();
         try {
           const user = await User.findOne({ email: credentials.email });
           if (user) {
-            const isPasswordCorrect = await bcrypt.compare(
-              credentials.password,
-              user.password
-            );
+            const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
             if (isPasswordCorrect) {
               return user;
             }
@@ -35,18 +29,13 @@ export const authOptions: any = {
         } catch (err: any) {
           throw new Error(err);
         }
-      },
+      }
     }),
-
-  
-
 
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-  }),
-    
-   
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+    })
   ],
   callbacks: {
     async signIn({ user, account }: { user: AuthUser; account: Account }) {
@@ -54,16 +43,12 @@ export const authOptions: any = {
         return true;
       }
       if (account?.provider == "google") {
-
-      
-
-
         await connect();
         try {
           const existingUser = await User.findOne({ email: user.email });
           if (!existingUser) {
             const newUser = new User({
-              email: user.email,
+              email: user.email
             });
 
             await newUser.save();
@@ -76,12 +61,9 @@ export const authOptions: any = {
         }
       }
       return false;
-    },
-  },
+    }
+  }
 };
 
-export const handler = NextAuth(authOptions);
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
-
-
-
