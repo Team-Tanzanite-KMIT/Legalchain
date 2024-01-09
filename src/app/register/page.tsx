@@ -2,9 +2,15 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+<<<<<<< Updated upstream
 import { signIn, useSession } from "next-auth/react";
 import  createSpecificUserModel  from "@/models/User";
 import User from "@/models/User";
+=======
+import { useSession } from "next-auth/react";
+
+import { signIn } from "next-auth/react";
+>>>>>>> Stashed changes
 
 
 export default function Register() {
@@ -14,6 +20,9 @@ export default function Register() {
   const [role, setRole] = useState<"client" | "lawyer" | "judge" | undefined>(
     undefined
   );
+
+
+
   const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {
@@ -30,16 +39,17 @@ export default function Register() {
 
 
 
-  const handleRoleChange = (event: any) => {
-    setRole(event.target.value);
+  const handleRoleChange = (e: any) => {
+    setRole(e.target.value);
   };
+
+
 
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
-    const role=e.target[2].value;
 
     if (!isValidEmail(email)) {
       setError("Email is invalid");
@@ -53,7 +63,7 @@ export default function Register() {
     }
 
     try {
-      const res = await fetch("/api/register",{
+      const res = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -66,24 +76,18 @@ export default function Register() {
       });
       if (res.status === 400) {
         setError("This email is already registered");
-      } else if (res.status === 200) {
+      }
+      else if (res.status === 200) {
         setError("");
-
-        const specificUserModel = createSpecificUserModel(role);
-  
-        await specificUserModel.create({
-          email: email,
-          password: password,
-          role: role,
-        });
+        // history.push(`/app/dashboards/${role.toLowerCase()}Dashboard`);
         router.push(`/app/dashboards/${role}Dashboard`);
+        
       }
     } catch (error) {
       setError("Error, try again");
       console.log(error);
     }
   };
-  
 
   if (sessionStatus === "loading") {
     return <h1>Loading...</h1>;
@@ -94,7 +98,7 @@ export default function Register() {
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="bg-[#212121] p-8 rounded shadow-md w-96">
           <h1 className="text-4xl text-center font-semibold mb-8 text-white">Register</h1>
-          <form onSubmit={handleSubmit} method ="POST">
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
               className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
