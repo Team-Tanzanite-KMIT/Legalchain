@@ -2,7 +2,7 @@ import NextAuth, { Account, User as AuthUser } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import  { User,createSpecificUserModel } from "@/models/User";
+import  { User } from "@/models/User";
 
 import connect from "@/utils/db";
 
@@ -19,14 +19,13 @@ const authOptions: any = {
         await connect();
         try {
           const user = await User.findOne({ email: credentials.email });
-          if (user) {
-            const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
-            if (isPasswordCorrect) {
-              return user;
-            }
+          if (!user) {
+            return null;
           }
-        } catch (err: any) {
-          throw new Error(err);
+          return user.toObject();
+        } catch (error) {
+          console.error(error);
+          return null;
         }
       }
     }),
