@@ -82,7 +82,7 @@
 
 import connect from "@/utils/db";
 import bcrypt from "bcryptjs";
-import {createSpecificUserModel} from "@/models/User";
+import {User,createSpecificUserModel} from "@/models/User";
 import { NextResponse, NextRequest } from "next/server";
 interface RequestBody {
   email: string;
@@ -102,14 +102,13 @@ export async function POST(request: NextRequest) {
   // console.log(request.method,request.body  ,  isRequestBody(request.body)) 
   if (request.method === "POST" ) {
     const body = await request.json();
-    const { email, password, role } = body;
+    const { email, password } = body;
     try {
       await connect();
-
-      const specificUserModel = createSpecificUserModel(role);
+      // const specificUserModel = createSpecificUserModel(role);
 
       // Check if the user already exists
-      const existingUser = await specificUserModel.findOne({ email }).exec();
+      const existingUser = await User.findOne({ email }).exec();
       
 
 
@@ -120,10 +119,10 @@ export async function POST(request: NextRequest) {
       const hashedPassword = await bcrypt.hash(password, 5);
 
       
-      const newUser = new specificUserModel({
+      const newUser = new User({
         email: email,
         password: hashedPassword,
-        role: role,
+        cases: []
       });
       await newUser.save();
 

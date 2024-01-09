@@ -5,7 +5,18 @@ interface UserDocument extends Document {
   email: string;
   password?: string;
   role: string;
+  cases: Array<any>;
+  docs: Array<string>;
 }
+
+const userCaseSchema = new Schema({
+  caseID: {
+    type: String,
+  },
+  role: {
+    type: String
+  }
+})
 
 const userSchema = new Schema<UserDocument>(
   {
@@ -18,19 +29,23 @@ const userSchema = new Schema<UserDocument>(
       type: String,
       required: false,
     },
-    role: {
+    cases: [{
+      type: userCaseSchema,
+      required: false
+    }],
+    docs: [{
       type: String,
-      required: true,
-    },
+      required: false
+    }]
   },
   { timestamps: true }
 );
 
 // Check if the "User" model already exists in the "models" object
-export const User: Model<UserDocument> = models.User 
-  ? (models.User as Model<UserDocument>) 
+export const User: Model<UserDocument> = models.User
+  ? (models.User as Model<UserDocument>)
   : model<UserDocument>("User", userSchema);
-  
+
 export const createSpecificUserModel = (role: string): Model<UserDocument> => {
   return model<UserDocument>(role, userSchema);
 };

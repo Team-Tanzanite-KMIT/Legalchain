@@ -1,6 +1,6 @@
 
 import * as grpc from '@grpc/grpc-js';
-import { connect, Contract, Identity, Signer, signers } from '@hyperledger/fabric-gateway';
+import { connect, Contract, Gateway, Identity, Signer, signers } from '@hyperledger/fabric-gateway';
 import * as crypto from 'crypto';
 import { promises as fs } from 'fs';
 import * as path from 'path';
@@ -106,6 +106,49 @@ main().catch(error => {
     console.error('******** FAILED to run the application:', error);
     process.exitCode = 1;
 });
+
+export async function getContract() {
+    const client = await newGrpcConnection();
+
+    const gateway = connect({
+        client,
+        identity: await newIdentity(),
+        signer: await newSigner(),
+        // Default timeouts for different gRPC calls
+        evaluateOptions: () => {
+            return { deadline: Date.now() + 5000 }; // 5 seconds
+        },
+        endorseOptions: () => {
+            return { deadline: Date.now() + 15000 }; // 15 seconds
+        },
+        submitOptions: () => {
+            return { deadline: Date.now() + 5000 }; // 5 seconds
+        },
+        commitStatusOptions: () => {
+            return { deadline: Date.now() + 60000 }; // 1 minute
+        },
+    });
+
+    // try {
+        // Get a network instance representing the channel where the smart contract is deployed.
+    const network = gateway.getNetwork(channelName);
+
+    // Get the smart contract from the network.
+    const contract = network.getContract(chaincodeName);
+
+    return {contract, gateway, client}
+
+        
+    // } finally {
+        gateway.close();
+        client.close();
+    // }
+}
+
+async function closeConnection(gateway: Gateway, client: grpc.Client) {
+    gateway.close()
+    client.close()
+}
 
 async function newGrpcConnection(): Promise<grpc.Client> {
     const tlsRootCert = await fs.readFile(tlsCertPath);
