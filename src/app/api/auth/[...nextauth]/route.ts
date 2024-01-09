@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import { Account, User as AuthUser } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -6,17 +6,7 @@ import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import connect from "@/utils/db";
 
-
-
-
-
-
-
-
-
-
-
-export const authOptions: any = {
+export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
@@ -37,6 +27,8 @@ export const authOptions: any = {
             );
             if (isPasswordCorrect) {
               return user;
+            } else {
+              return null
             }
           }
         } catch (err: any) {
@@ -79,6 +71,3 @@ export const authOptions: any = {
 
 export const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
-
-
-
