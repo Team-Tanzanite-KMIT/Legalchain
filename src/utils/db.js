@@ -1,3 +1,4 @@
+import { createSpecificUserModel } from "@/models/User";
 import mongoose from "mongoose";
 
 const connect = async () => {
@@ -8,6 +9,7 @@ const connect = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+    const specificUserModel=createSpecificUserModel(role);
     console.log("Mongo Connection successfully established.");
   } catch (error) {
     console.error("Error connecting to Mongo Instance");

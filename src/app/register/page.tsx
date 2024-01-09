@@ -10,6 +10,8 @@ export default function Register() {
 
   const [role, setRole] = useState<"client" | "lawyer" | "judge" | undefined>(undefined);
 
+
+
   const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {
@@ -23,9 +25,15 @@ export default function Register() {
     return emailRegex.test(email);
   };
 
+
+
+
   const handleRoleChange = (e: any) => {
     setRole(e.target.value);
   };
+
+
+
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -53,14 +61,16 @@ export default function Register() {
           email: email,
           password: password,
           role: role
-        })
+        }),
       });
       if (res.status === 400) {
         setError("This email is already registered");
-      } else if (res.status === 200) {
+      }
+      else if (res.status === 200) {
         setError("");
-
-        router.push(`/${role}-dashboard`);
+        // history.push(`/app/dashboards/${role.toLowerCase()}Dashboard`);
+        router.push(`/app/dashboards/${role}Dashboard`);
+        
       }
     } catch (error) {
       setError("Error, try again");
@@ -90,6 +100,9 @@ export default function Register() {
               placeholder="Password"
               required
             />
+
+
+
 
             <select
               name="loginType"

@@ -1,0 +1,55 @@
+folder structure
+
+/chaincode
+/public
+   /images
+    favicon.ico
+    next.svg
+    vercel.svg
+
+/src 
+  /app
+    /api
+    /auth
+      route.ts
+    /register
+      route.ts
+    .d.ts
+    about_index.jsx
+    favicon.ico
+    globals.css
+    layout.tsx
+    page.tsx
+  /assets
+    /fonts
+    /images
+  /components
+    /Button
+    /ErrorMessage
+    /Footer
+    /Footer
+    /Img
+    /Input
+    /Line
+    /List
+    /Text
+    /TextArea
+    index.ts
+    LanguageToggle.js
+    Navbar.tsx
+  /models
+    User.ts
+  /utils
+    authOptions.ts
+    db.js
+    SessionProvider.tsx
+.env
+.eslintrc.json
+.gitignore
+bun.lockb
+next-env.d.ts
+next.config.js
+package-lock.json
+package.json
+postcss.config.jstailwind.config.ts
+tsconfig.json
