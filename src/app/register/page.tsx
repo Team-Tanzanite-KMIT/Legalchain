@@ -2,15 +2,13 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signIn ,useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Register() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const [role, setRole] = useState<"client" | "lawyer" | "judge" | undefined>(
-    undefined
-  );
+  const [role, setRole] = useState<"client" | "lawyer" | "judge" | undefined>(undefined);
 
   const { data: session, status: sessionStatus } = useSession();
 
@@ -131,4 +129,4 @@ export default function Register() {
       </div>
     )
   );
-};
+}
