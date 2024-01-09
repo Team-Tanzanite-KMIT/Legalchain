@@ -1,12 +1,13 @@
+"use client";
 import React from "react";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import { getSession } from "next-auth/react";
 
 export default async function Dashboard() {
-  const session = await getServerSession();
-  if (!session) {
-    redirect("/");
-  }
+  const session = await getSession();
+  // if (!session) {
+  //   redirect("/");
+  // }
+  console.log(session)
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
       Dashboard

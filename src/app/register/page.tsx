@@ -1,16 +1,15 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
+import { Role } from "@/utils/types";
 
 export default function Register() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const [role, setRole] = useState<"client" | "lawyer" | "judge" | undefined>(undefined);
-
-
+  const [role, setRole] = useState<Role>();
 
   const { data: session, status: sessionStatus } = useSession();
 
@@ -25,15 +24,9 @@ export default function Register() {
     return emailRegex.test(email);
   };
 
-
-
-
-  const handleRoleChange = (e: any) => {
-    setRole(e.target.value);
+  const handleRoleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setRole(e.target.value as Role);
   };
-
-
-
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -53,29 +46,29 @@ export default function Register() {
 
     try {
       const res = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          role: role
-        }),
-      });
-      if (res.status === 400) {
-        setError("This email is already registered");
-      }
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        role: role
+      }),
+    });
+        if (res.status === 400) {
+          setError("This email is already registered");
+        }
       else if (res.status === 200) {
-        setError("");
-        // history.push(`/app/dashboards/${role.toLowerCase()}Dashboard`);
-        router.push(`/app/dashboards/${role}Dashboard`);
-        
+          setError("");
+          // history.push(`/app/dashboards/${role.toLowerCase()}Dashboard`);
+          router.push(`/app/dashboards/${role}Dashboard`);
+
+        }
+      } catch (error) {
+        setError("Error, try again");
+        console.log(error);
       }
-    } catch (error) {
-      setError("Error, try again");
-      console.log(error);
-    }
   };
 
   if (sessionStatus === "loading") {
@@ -101,16 +94,14 @@ export default function Register() {
               required
             />
 
-
-
-
             <select
               name="loginType"
               value={role}
               onChange={handleRoleChange}
+              defaultValue={""}
               className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
             >
-              <option value="" selected disabled hidden>
+              <option value="" disabled hidden>
                 -Select-
               </option>
               <option value="client">Client</option>

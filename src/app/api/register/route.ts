@@ -33,7 +33,6 @@
 //   }
 // };
 
-
 // import connect from "@/utils/db";
 // import bcrypt from "bcryptjs";
 // import User from "@/models/User";
@@ -82,57 +81,35 @@
 
 import connect from "@/utils/db";
 import bcrypt from "bcryptjs";
-import {createSpecificUserModel} from "@/models/User";
+import { createSpecificUserModel } from "@/models/User";
 import { NextResponse, NextRequest } from "next/server";
+
 interface RequestBody {
   email: string;
   password: string;
   role: string;
 }
 
-function isRequestBody(obj: any): obj is RequestBody {
-  return (
-    obj &&
-    typeof obj.email === "string" &&
-    typeof obj.password === "string" &&
-    typeof obj.role === "string"
-  );
-}
 export async function POST(request: NextRequest) {
-  // console.log(request.method,request.body  ,  isRequestBody(request.body)) 
-  if (request.method === "POST" ) {
-    const body = await request.json();
-    const { email, password, role } = body;
-    try {
-      await connect();
+  const body: RequestBody = await request.json();
+  const { email, password, role } = body;
+  try {
+    await connect();
+    const specificUserModel = createSpecificUserModel(role);
+    const existingUser = await specificUserModel.findOne({ email }).exec();
+    if (existingUser) return new NextResponse("Email is already in use", { status: 400 });
 
-      const specificUserModel = createSpecificUserModel(role);
+    const hashedPassword = await bcrypt.hash(password, 5);
+    const newUser = new specificUserModel({
+      email: email,
+      password: hashedPassword,
+      role: role
+    });
+    await newUser.save();
 
-      // Check if the user already exists
-      const existingUser = await specificUserModel.findOne({ email }).exec();
-      
-
-
-
-      if (existingUser) {
-        return new NextResponse("Email is already in use", { status: 400 });
-      }
-      const hashedPassword = await bcrypt.hash(password, 5);
-
-      
-      const newUser = new specificUserModel({
-        email: email,
-        password: hashedPassword,
-        role: role,
-      });
-      await newUser.save();
-
-      return new NextResponse("User registered successfully", { status: 200 });
-    } catch (error) {
-      console.error(error);
-      return new NextResponse("Internal Server Error", { status: 500 });
-    }
+    return new NextResponse("User registered successfully", { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
-  return new NextResponse("Method Not Allowed", { status: 405 });
-};
-
+}

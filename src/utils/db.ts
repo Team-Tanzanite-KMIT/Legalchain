@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const connect = async () => {
+export default async function connect() {
   if (mongoose.connections[0].readyState) return;
 
   try {
@@ -10,5 +10,3 @@ const connect = async () => {
     console.error("Error connecting to Mongo Instance");
   }
 };
-
-export default connect;
