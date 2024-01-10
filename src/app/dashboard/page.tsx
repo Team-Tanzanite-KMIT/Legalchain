@@ -15,7 +15,6 @@ export default async function Dashboard() {
     redirect("/");
   }
   console.log(session)
-  // console.log(`${process.env.NEXTJS_URL}/api/cases?email=${session.user?.email}`)
 
   const cases: { roles: any, details: caseAttr[] } = await (await fetch(
     `${process.env.NEXTJS_URL}/api/cases?email=${session.user?.email}`

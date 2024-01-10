@@ -49,7 +49,10 @@ export async function GET(req: NextRequest) {
       let caseFound = await Case.findOne({ caseID: i.caseID });
       allCaseDetails.push(caseFound as caseAttr);
     }
-    return NextResponse.json({roles: allCases,details: allCaseDetails}, {status: 200})
+    return NextResponse.json(
+      { roles: allCases, details: allCaseDetails },
+      { status: 200 }
+    );
   } catch (e) {
     return NextResponse.json({ error: `Internal Server Error ${e}` }, { status: 500 });
   }

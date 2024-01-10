@@ -1,4 +1,4 @@
-import mongoose, { Document, Model } from "mongoose";
+import mongoose, { Document, Model } from 'mongoose';
 const { Schema, model, models } = mongoose;
 
 interface UserDocument extends Document {
@@ -10,8 +10,8 @@ interface UserDocument extends Document {
 }
 
 export interface userCaseAttrs {
-  caseID: string,
-  role: string
+  caseID: string;
+  role: string;
 }
 
 const userCaseSchema = new Schema<userCaseAttrs>({
@@ -19,9 +19,9 @@ const userCaseSchema = new Schema<userCaseAttrs>({
     type: String,
   },
   role: {
-    type: String
-  }
-})
+    type: String,
+  },
+});
 
 const userSchema = new Schema<UserDocument>(
   {
@@ -34,24 +34,22 @@ const userSchema = new Schema<UserDocument>(
       type: String,
       required: false,
     },
-    cases: [{
-      type: userCaseSchema,
-      required: false
-    }],
-    docs: [{
-      type: String,
-      required: false
-    }]
+    cases: [
+      {
+        type: userCaseSchema,
+        required: false,
+      },
+    ],
+    docs: [
+      {
+        type: String,
+        required: false,
+      },
+    ],
   },
   { timestamps: true }
 );
 
-// Check if the "User" model already exists in the "models" object
 export const User: Model<UserDocument> = models.User
   ? (models.User as Model<UserDocument>)
-  : model<UserDocument>("User", userSchema);
-
-export const createSpecificUserModel = (role: string): Model<UserDocument> => {
-  return model<UserDocument>(role, userSchema);
-};
-
+  : model<UserDocument>('User', userSchema);

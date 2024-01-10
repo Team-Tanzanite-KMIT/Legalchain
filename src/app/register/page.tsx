@@ -1,22 +1,20 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
+'use client';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { signIn, useSession } from 'next-auth/react';
 
 export default function Register() {
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const router = useRouter();
 
-  const [role, setRole] = useState<"client" | "lawyer" | "judge" | undefined>(undefined);
-
-
+  const [role, setRole] = useState<'client' | 'lawyer' | 'judge' | undefined>(undefined);
 
   const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {
-    if (sessionStatus === "authenticated") {
-      router.replace("/dashboard");
+    if (sessionStatus === 'authenticated') {
+      router.replace('/dashboard');
     }
   }, [sessionStatus]);
 
@@ -25,15 +23,9 @@ export default function Register() {
     return emailRegex.test(email);
   };
 
-
-
-
   const handleRoleChange = (e: any) => {
     setRole(e.target.value);
   };
-
-
-
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -41,49 +33,47 @@ export default function Register() {
     const password = e.target[1].value;
 
     if (!isValidEmail(email)) {
-      setError("Email is invalid");
+      setError('Email is invalid');
       return;
     } else if (!password || password.length < 8) {
-      setError("Password is invalid");
+      setError('Password is invalid');
       return;
     } else if (!role || role.length === 0) {
-      setError("Select a role to register");
+      setError('Select a role to register');
       return;
     }
 
     try {
-      const res = await fetch("/api/register", {
-        method: "POST",
+      const res = await fetch('/api/register', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email: email,
           password: password,
-          role: role
+          role: role,
         }),
       });
       if (res.status === 400) {
-        setError("This email is already registered");
-      }
-      else if (res.status === 200) {
-        setError("");
+        setError('This email is already registered');
+      } else if (res.status === 200) {
+        setError('');
         // history.push(`/app/dashboards/${role.toLowerCase()}Dashboard`);
         router.push(`/app/dashboards/${role}Dashboard`);
-        
       }
     } catch (error) {
-      setError("Error, try again");
+      setError('Error, try again');
       console.log(error);
     }
   };
 
-  if (sessionStatus === "loading") {
+  if (sessionStatus === 'loading') {
     return <h1>Loading...</h1>;
   }
 
   return (
-    sessionStatus !== "authenticated" && (
+    sessionStatus !== 'authenticated' && (
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="bg-[#212121] p-8 rounded shadow-md w-96">
           <h1 className="text-4xl text-center font-semibold mb-8 text-white">Register</h1>
@@ -100,9 +90,6 @@ export default function Register() {
               placeholder="Password"
               required
             />
-
-
-
 
             <select
               name="loginType"
@@ -128,14 +115,17 @@ export default function Register() {
             <p className="text-red-600 text-[16px] mb-4 text-center">{error && error}</p>
             <div className="text-center text-gray-500 mt-4">- OR -</div>
             <button
-              onClick={() => signIn("google")}
+              onClick={() => signIn('google')}
               className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
             >
               Sign in with Google
             </button>
           </form>
           <div className="text-center text-gray-500 mt-4">- OR -</div>
-          <Link className="block text-center text-blue-500 hover:underline mt-2" href="/login">
+          <Link
+            className="block text-center text-blue-500 hover:underline mt-2"
+            href="/login"
+          >
             Login with an existing account
           </Link>
         </div>
