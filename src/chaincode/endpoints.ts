@@ -237,7 +237,7 @@ export async function getAllFiles(contract: Contract): Promise<string> {
  */
 export async function createFile(contract: Contract, file: FileParams): Promise<boolean> {
   console.log(
-    '\n--> Submit Transaction: Createfile, creates new file with ID, Color, Size, Owner and AppraisedValue arguments'
+    '\n--> Submit Transaction: Createfile, creates new file'
   );
 
   await contract.submitTransaction('CreateFile', file.filename, file.content, file.owner);
@@ -285,7 +285,7 @@ export async function transferFileAsync(
 export async function readFileByID(contract: Contract, id: string): Promise<Asset> {
   console.log('\n--> Evaluate Transaction: ReadAsset, function returns asset attributes');
 
-  const resultBytes = await contract.evaluateTransaction('ReadAsset', id);
+  const resultBytes = await contract.evaluateTransaction('ReadFile', id);
 
   const resultJson = utf8Decoder.decode(resultBytes);
   const result: Asset = JSON.parse(resultJson);

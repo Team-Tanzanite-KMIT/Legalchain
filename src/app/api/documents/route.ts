@@ -9,11 +9,11 @@ export async function POST(req: NextRequest) {
   try {
     const fileParams: FileParams = await req.json();
     console.log(fileParams)
+    await connect()
+    await User.updateOne({ email: fileParams.owner }, { $push: { docs: fileParams.filename.split(".")[0] } });
     let { contract, gateway, client } = await chaincode.getContract();
     await chaincode.createFile(contract, fileParams);
-    await connect()
-    User.updateOne({ email: fileParams.owner }, { $push: { docs: fileParams.filename } });
-
+    //  console.log(await User.find({ email: fileParams.owner }))
     return new NextResponse('Document Uploaded', { status: 200 });
   } catch (e) {
     return new NextResponse(`Internal Server Error ${e} `, { status: 500 });
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   try {
     const email: string = req.nextUrl.searchParams.get('email')!;
-    const requestedOwnerName: string = req.nextUrl.searchParams.get('requestedowner')!;
+    const requestedOwnerName = req.nextUrl.searchParams.get('requestedowner');
 
     connect();
     let { contract, gateway, client } = await chaincode.getContract();
