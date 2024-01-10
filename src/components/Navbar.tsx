@@ -134,6 +134,7 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { signOut, useSession } from "next-auth/react";
+import { Session } from "next-auth";
 import Link from "next/link";
 function NavList() {
   return (
@@ -145,7 +146,7 @@ function NavList() {
         color="blue-gray"
         className="font-medium"
       >
-        <ListItem className="flex items-center gap-2 py-2 pr-4">Home</ListItem>
+        <ListItem className="flex items-center gap-2 py-2 pr-4"><Link href={"/"}>Home</Link></ListItem>
       </Typography>
       {/* <NavListMenu /> */}
       <Typography
@@ -161,6 +162,23 @@ function NavList() {
       </Typography>
     </List>
   );
+}
+
+function SessionManagementButtons({ isInCollapse, session }: { isInCollapse: boolean, session: Session | null }) {
+  return (<>
+    <Button variant={(isInCollapse) ? "outlined" : "text"} size="sm" color="blue-gray" fullWidth onClick={() => {
+      // !(session) ? "Log In" : signOut();
+      if (session) {
+        signOut();
+      }
+    }}>
+      {/* Log In */}
+      {!(session) ? <Link href="/login">Log In</Link> : "Sign Out"}
+    </Button>
+    {!session && <Button variant="gradient" size="sm" className="h-max" fullWidth>
+      <Link href="/register">Register</Link>
+    </Button>}
+  </>)
 }
 
 export function NavbarWithMegaMenu() {
@@ -190,12 +208,8 @@ export function NavbarWithMegaMenu() {
           <NavList />
         </div>
         <div className="hidden gap-2 lg:flex">
-          <Button variant="text" size="sm" color="blue-gray">
-            Log In
-          </Button>
-          <Button variant="gradient" size="sm">
-            Sign In
-          </Button>
+          <SessionManagementButtons isInCollapse={false} session={session} />
+
         </div>
         <IconButton
           variant="text"
@@ -213,18 +227,7 @@ export function NavbarWithMegaMenu() {
       <Collapse open={openNav}>
         <NavList />
         <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
-          <Button variant="outlined" size="sm" color="blue-gray" fullWidth onClick={() => {
-            // !(session) ? "Log In" : signOut();
-            if (session) {
-              signOut();
-            }
-          }}>
-            {/* Log In */}
-            {!(session) ? <Link href="/login">Log In</Link> : "Sign Out"}
-          </Button>
-          {!session && <Button variant="gradient" size="sm" fullWidth>
-            Sign In
-          </Button>}
+          <SessionManagementButtons isInCollapse={true} session={session} />
         </div>
       </Collapse>
     </Navbar>

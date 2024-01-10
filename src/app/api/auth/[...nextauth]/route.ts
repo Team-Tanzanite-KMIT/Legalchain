@@ -1,4 +1,4 @@
-import NextAuth, { Account, User as AuthUser } from "next-auth";
+import NextAuth, { Account, AuthOptions, User as AuthUser } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
@@ -6,7 +6,8 @@ import  { User } from "@/models/User";
 
 import connect from "@/utils/db";
 
-const authOptions: any = {
+const authOptions: AuthOptions = {
+  secret: process.env.NEXTAUTH_URL,
   providers: [
     CredentialsProvider({
       id: "credentials",
