@@ -7,7 +7,7 @@ import  { User } from "@/models/User";
 import connect from "@/utils/db";
 
 const authOptions: AuthOptions = {
-  secret: process.env.NEXTAUTH_URL,
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       id: "credentials",
@@ -33,7 +33,10 @@ const authOptions: AuthOptions = {
 
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      httpOptions: {
+        timeout: 45000
+      }
     })
   ],
   callbacks: {

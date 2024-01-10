@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-interface caseAttr {
+export interface caseAttr {
     caseID: string,
     judges: string[],
     lawyers: string[],

@@ -5,11 +5,16 @@ interface UserDocument extends Document {
   email: string;
   password?: string;
   role: string;
-  cases: Array<any>;
+  cases: Array<userCaseAttrs>;
   docs: Array<string>;
 }
 
-const userCaseSchema = new Schema({
+export interface userCaseAttrs {
+  caseID: string,
+  role: string
+}
+
+const userCaseSchema = new Schema<userCaseAttrs>({
   caseID: {
     type: String,
   },
