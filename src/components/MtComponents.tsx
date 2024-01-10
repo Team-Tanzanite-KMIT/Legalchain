@@ -1,5 +1,5 @@
 "use client"
 
-import { Typography, Card } from "@material-tailwind/react";
+import { Typography, Card, CardBody, CardHeader, CardFooter } from "@material-tailwind/react";
 
-export { Typography, Card };
+export { Typography, Card, CardBody, CardHeader, CardFooter };

@@ -142,7 +142,7 @@ function NavList() {
       <Typography
         as="a"
         href="#"
-        variant="small"
+        variant="h5"
         color="blue-gray"
         className="font-medium"
       >
@@ -152,7 +152,7 @@ function NavList() {
       <Typography
         as="a"
         href="#"
-        variant="small"
+        variant="h5"
         color="blue-gray"
         className="font-medium"
       >
@@ -166,7 +166,7 @@ function NavList() {
 
 function SessionManagementButtons({ isInCollapse, session }: { isInCollapse: boolean, session: Session | null }) {
   return (<>
-    <Button variant={(isInCollapse) ? "outlined" : "text"} size="sm" color="blue-gray" fullWidth onClick={() => {
+    <Button variant={(isInCollapse) ? "outlined" : "text"} size="md" color="blue-gray" fullWidth onClick={() => {
       // !(session) ? "Log In" : signOut();
       if (session) {
         signOut();
@@ -175,7 +175,7 @@ function SessionManagementButtons({ isInCollapse, session }: { isInCollapse: boo
       {/* Log In */}
       {!(session) ? <Link href="/login">Log In</Link> : "Sign Out"}
     </Button>
-    {!session && <Button variant="gradient" size="sm" className="h-max" fullWidth>
+    {!session && <Button variant="gradient" size="md" className="h-max" fullWidth>
       <Link href="/register">Register</Link>
     </Button>}
   </>)
@@ -194,12 +194,12 @@ export function NavbarWithMegaMenu() {
   }, []);
 
   return (
-    <Navbar className="mx-auto max-w-screen-xl px-4 py-2">
+    <Navbar className="mx-auto max-w-screen-xl px-4 py-2 ">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
           href="/"
-          variant="h6"
+          variant="h4"
           className="mr-4 cursor-pointer py-1.5 lg:ml-2"
         >
           LegalChain

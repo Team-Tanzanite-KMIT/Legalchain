@@ -2,17 +2,22 @@
 
 import {
   Card as MaterialCard,
-  CardHeader,
+  // CardHeader,
   CardBody,
   Typography,
-} from '@material-tailwind/react';
+} from '@/components/MtComponents';
 import React from 'react';
 import { caseAttr } from '@/models/Case';
+import Link from 'next/link';
 
 export default function Card({ userCase }: { userCase: caseAttr }): React.ReactNode {
   return (
-    <MaterialCard color="gray" className="w-96">
+    <Link href={`/casedashboard/${userCase.caseID}`}>
+    <MaterialCard color="gray" className="w-96 border-[#363636] border-[1.5px] hover:-mt-2 duration-150">
       <CardBody>
+        <Typography variant='h6'>
+          Case:
+        </Typography>
         <Typography variant="h4" color="white" className="mb-2">
           {userCase?.caseID}
         </Typography>
@@ -56,5 +61,6 @@ export default function Card({ userCase }: { userCase: caseAttr }): React.ReactN
         </div>
       </CardBody>
     </MaterialCard>
+    </Link>
   );
 }
