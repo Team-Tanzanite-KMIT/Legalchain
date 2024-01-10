@@ -23,6 +23,9 @@ const authOptions: AuthOptions = {
           if (!user) {
             return null;
           }
+          else if(!(await bcrypt.compare(credentials.password, user.password!))) {
+            return null
+          }
           return user.toObject();
         } catch (error) {
           console.error(error);

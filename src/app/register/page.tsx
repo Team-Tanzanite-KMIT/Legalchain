@@ -35,11 +35,8 @@ export default function Register() {
     if (!isValidEmail(email)) {
       setError('Email is invalid');
       return;
-    } else if (!password || password.length < 8) {
+    } else if (!password || password.length < 4) {
       setError('Password is invalid');
-      return;
-    } else if (!role || role.length === 0) {
-      setError('Select a role to register');
       return;
     }
 
@@ -52,7 +49,7 @@ export default function Register() {
         body: JSON.stringify({
           email: email,
           password: password,
-          role: role,
+          // role: role,
         }),
       });
       if (res.status === 400) {
@@ -60,7 +57,7 @@ export default function Register() {
       } else if (res.status === 200) {
         setError('');
         // history.push(`/app/dashboards/${role.toLowerCase()}Dashboard`);
-        router.push(`/app/dashboards/${role}Dashboard`);
+        router.push(`/app/dashboard`);
       }
     } catch (error) {
       setError('Error, try again');
@@ -91,7 +88,7 @@ export default function Register() {
               required
             />
 
-            <select
+            {/* <select
               name="loginType"
               value={role}
               onChange={handleRoleChange}
@@ -103,7 +100,7 @@ export default function Register() {
               <option value="client">Client</option>
               <option value="lawyer">Lawyer</option>
               <option value="judge">Judge</option>
-            </select>
+            </select> */}
 
             <button
               type="submit"
