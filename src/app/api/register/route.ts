@@ -33,7 +33,6 @@
 //   }
 // };
 
-
 // import connect from "@/utils/db";
 // import bcrypt from "bcryptjs";
 // import User from "@/models/User";
@@ -80,11 +79,18 @@
 //   return res.status(405).json({ error: "Method Not Allowed" });
 // }
 
+<<<<<<< HEAD
 import connect from "@/utils/db";
 import bcrypt from "bcryptjs";
 import {createSpecificUserModel} from "@/models/UserDetails";
 import { NextResponse, NextRequest } from "next/server";
 
+=======
+import connect from '@/utils/db';
+import bcrypt from 'bcryptjs';
+import { User, createSpecificUserModel } from '@/models/User';
+import { NextResponse, NextRequest } from 'next/server';
+>>>>>>> origin/roles
 interface RequestBody {
   email: string;
   password: string;
@@ -94,14 +100,14 @@ interface RequestBody {
 function isRequestBody(obj: any): obj is RequestBody {
   return (
     obj &&
-    typeof obj.email === "string" &&
-    typeof obj.password === "string" &&
-    typeof obj.role === "string"
+    typeof obj.email === 'string' &&
+    typeof obj.password === 'string' &&
+    typeof obj.role === 'string'
   );
 }
 export async function POST(request: NextRequest) {
-  // console.log(request.method,request.body  ,  isRequestBody(request.body)) 
-  if (request.method === "POST" ) {
+  // console.log(request.method,request.body  ,  isRequestBody(request.body))
+  if (request.method === 'POST') {
     const body = await request.json();
     const { email, password } = body;
     try {
@@ -110,29 +116,41 @@ export async function POST(request: NextRequest) {
       const specificUserModel = createSpecificUserModel(role);
 
       // Check if the user already exists
+<<<<<<< HEAD
       const existingUser = await specificUserModel.findOne({ email }).exec();
       
 
 
+=======
+      const existingUser = await User.findOne({ email }).exec();
+>>>>>>> origin/roles
 
       if (existingUser) {
-        return new NextResponse("Email is already in use", { status: 400 });
+        return new NextResponse('Email is already in use', { status: 400 });
       }
       const hashedPassword = await bcrypt.hash(password, 5);
 
+<<<<<<< HEAD
       
       const newUser = new specificUserModel({
+=======
+      const newUser = new User({
+>>>>>>> origin/roles
         email: email,
         password: hashedPassword,
-        cases: []
+        cases: [],
       });
       await newUser.save();
+<<<<<<< HEAD
       return new NextResponse("User registered successfully", { status: 200 });
+=======
+
+      return new NextResponse('User registered successfully', { status: 200 });
+>>>>>>> origin/roles
     } catch (error) {
       console.error(error);
-      return new NextResponse("Internal Server Error", { status: 500 });
+      return new NextResponse('Internal Server Error', { status: 500 });
     }
   }
-  return new NextResponse("Method Not Allowed", { status: 405 });
-};
-
+  return new NextResponse('Method Not Allowed', { status: 405 });
+}

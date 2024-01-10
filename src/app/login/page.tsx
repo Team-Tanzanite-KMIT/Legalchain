@@ -1,18 +1,17 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+'use client';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
   const router = useRouter();
-  const [error, setError] = useState("");
-  // const session = useSession();
+  const [error, setError] = useState('');
   const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {
-    if (sessionStatus === "authenticated") {
-      router.replace("/dashboard");
+    if (sessionStatus === 'authenticated') {
+      router.replace('/dashboard');
     }
   }, [sessionStatus, router]);
 
@@ -27,35 +26,35 @@ export default function Login() {
     const password = e.target[1].value;
 
     if (!isValidEmail(email)) {
-      setError("Email is invalid");
+      setError('Email is invalid');
       return;
     }
 
-    if (!password || password.length < 8) {
-      setError("Password is invalid");
+    if (!password || password.length < 4) {
+      setError('Password is invalid');
       return;
     }
 
-    const res = await signIn("credentials", {
+    const res = await signIn('credentials', {
       redirect: false,
       email,
       password
     });
 
     if (res?.error) {
-      setError("Invalid email or password");
-      if (res?.url) router.replace("/dashboard");
+      setError('Invalid email or password');
+      if (res?.url) router.replace('/dashboard');
     } else {
-      setError("");
+      setError('');
     }
   };
 
-  if (sessionStatus === "loading") {
+  if (sessionStatus === 'loading') {
     return <h1>Welcome!!</h1>;
   }
 
   return (
-    sessionStatus !== "authenticated" && (
+    sessionStatus !== 'authenticated' && (
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="bg-[#212121] p-8 rounded shadow-md w-96">
           <h1 className="text-4xl text-center font-semibold mb-8 text-white">Login</h1>
@@ -76,12 +75,12 @@ export default function Login() {
               type="submit"
               className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
             >
-              {" "}
+              {' '}
               Sign In
             </button>
             <p className="text-red-600 text-[16px] mb-4">{error && error}</p>
           </form>
-          
+
           <div className="text-center text-gray-500 mt-4">- OR -</div>
           <Link
             className="block text-center text-blue-500 hover:underline mt-2"
@@ -93,4 +92,4 @@ export default function Login() {
       </div>
     )
   );
-};
+}
