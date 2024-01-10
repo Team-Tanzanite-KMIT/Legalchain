@@ -58,15 +58,15 @@ const Navbar = () => {
   const { data: session } = useSession();
 
   return (
+    // <div className = "navbar flex  min-h-screen flex-col justify-between m-10 items-center">
+  //  <div className="flex justify-between items-center w-full h-50 px-10 text-white bg-black fixed nav">
     <div>
       <ul className="flex justify-between m-10 items-center">
         <div>
           <Link href="/">
             <li>Home</li>
           </Link>
-          <Link href="/about">
-            <li>About</li>
-          </Link>
+          
         </div>
         <div className="flex gap-10 items-center">
           {!session ? (
@@ -96,6 +96,7 @@ const Navbar = () => {
         </div>
       </ul>
     </div>
+    // </div>
   );
 };
 

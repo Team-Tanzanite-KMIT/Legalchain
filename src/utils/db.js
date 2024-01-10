@@ -1,4 +1,4 @@
-import { createSpecificUserModel } from "@/models/User";
+import { createSpecificUserModel } from "@/models/UserDetails";
 import mongoose from "mongoose";
 
 const connect = async () => {

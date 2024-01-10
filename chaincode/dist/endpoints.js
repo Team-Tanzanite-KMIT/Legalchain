@@ -23,6 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.updateNonExistentAsset = exports.readFileByID = exports.transferFileAsync = exports.createFile = exports.getAllFiles = exports.initLedger = void 0;
 const grpc = __importStar(require("@grpc/grpc-js"));
 const fabric_gateway_1 = require("@hyperledger/fabric-gateway");
 const crypto = __importStar(require("crypto"));
@@ -131,6 +132,7 @@ async function initLedger(contract) {
     await contract.submitTransaction('InitLedger');
     console.log('*** Transaction committed successfully');
 }
+exports.initLedger = initLedger;
 /**
  * Evaluate a transaction to query ledger state.
  */
@@ -140,7 +142,9 @@ async function getAllFiles(contract) {
     const resultJson = utf8Decoder.decode(resultBytes);
     const result = JSON.parse(resultJson);
     console.log('*** Result:', result);
+    return resultJson;
 }
+exports.getAllFiles = getAllFiles;
 /**
  * Submit a transaction synchronously, blocking until it has been committed to the ledger.
  */
@@ -148,7 +152,9 @@ async function createFile(contract, file) {
     console.log('\n--> Submit Transaction: Createfile, creates new file with ID, Color, Size, Owner and AppraisedValue arguments');
     await contract.submitTransaction('CreateFile', file.filename, file.content, file.owner);
     console.log('*** Transaction committed successfully');
+    return true;
 }
+exports.createFile = createFile;
 /**
  * Submit transaction asynchronously, allowing the application to process the smart contract response (e.g. update a UI)
  * while waiting for the commit notification.
@@ -166,7 +172,9 @@ async function transferFileAsync(contract, id, newOwner) {
         throw new Error(`Transaction ${status.transactionId} failed to commit with status code ${status.code}`);
     }
     console.log('*** Transaction committed successfully');
+    return JSON.parse(oldOwner);
 }
+exports.transferFileAsync = transferFileAsync;
 async function readFileByID(contract, id) {
     console.log('\n--> Evaluate Transaction: ReadAsset, function returns asset attributes');
     const resultBytes = await contract.evaluateTransaction('ReadAsset', id);
@@ -175,6 +183,7 @@ async function readFileByID(contract, id) {
     console.log('*** Result:', result);
     return result;
 }
+exports.readFileByID = readFileByID;
 /**
  * submitTransaction() will throw an error containing details of any error responses from the smart contract.
  */
@@ -188,6 +197,7 @@ async function updateNonExistentAsset(contract) {
         console.log('*** Successfully caught the error: \n', error);
     }
 }
+exports.updateNonExistentAsset = updateNonExistentAsset;
 /**
  * envOrDefault() will return the value of an environment variable, or a default value if the variable is undefined.
  */

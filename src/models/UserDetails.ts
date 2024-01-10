@@ -25,8 +25,6 @@ const userSchema = new Schema<UserDocument>(
   },
   { timestamps: true }
 );
-
-// Check if the "User" model already exists in the "models" object
 export const User: Model<UserDocument> = models.User 
   ? (models.User as Model<UserDocument>) 
   : model<UserDocument>("User", userSchema);
