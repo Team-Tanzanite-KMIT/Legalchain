@@ -1,5 +1,11 @@
-import { Contract } from '@hyperledger/fabric-gateway';
+import * as grpc from '@grpc/grpc-js';
+import { Contract, Gateway } from '@hyperledger/fabric-gateway';
 import { Asset, FileParams } from './types';
+export declare function getContract(): Promise<{
+    contract: Contract;
+    gateway: Gateway;
+    client: grpc.Client;
+}>;
 /**
  * This type of transaction would typically only be run once by an application the first time it was started after its
  * initial deployment. A new version of the chaincode deployed later would likely not need to run an "init" function.

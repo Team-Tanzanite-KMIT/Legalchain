@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateNonExistentAsset = exports.readFileByID = exports.transferFileAsync = exports.createFile = exports.getAllFiles = exports.initLedger = void 0;
+exports.updateNonExistentAsset = exports.readFileByID = exports.transferFileAsync = exports.createFile = exports.getAllFiles = exports.initLedger = exports.getContract = void 0;
 const grpc = __importStar(require("@grpc/grpc-js"));
 const fabric_gateway_1 = require("@hyperledger/fabric-gateway");
 const crypto = __importStar(require("crypto"));
@@ -105,6 +105,42 @@ main().catch(error => {
     console.error('******** FAILED to run the application:', error);
     process.exitCode = 1;
 });
+async function getContract() {
+    const client = await newGrpcConnection();
+    const gateway = (0, fabric_gateway_1.connect)({
+        client,
+        identity: await newIdentity(),
+        signer: await newSigner(),
+        // Default timeouts for different gRPC calls
+        evaluateOptions: () => {
+            return { deadline: Date.now() + 5000 }; // 5 seconds
+        },
+        endorseOptions: () => {
+            return { deadline: Date.now() + 15000 }; // 15 seconds
+        },
+        submitOptions: () => {
+            return { deadline: Date.now() + 5000 }; // 5 seconds
+        },
+        commitStatusOptions: () => {
+            return { deadline: Date.now() + 60000 }; // 1 minute
+        },
+    });
+    // try {
+    // Get a network instance representing the channel where the smart contract is deployed.
+    const network = gateway.getNetwork(channelName);
+    // Get the smart contract from the network.
+    const contract = network.getContract(chaincodeName);
+    return { contract, gateway, client };
+    // } finally {
+    gateway.close();
+    client.close();
+    // }
+}
+exports.getContract = getContract;
+async function closeConnection(gateway, client) {
+    gateway.close();
+    client.close();
+}
 async function newGrpcConnection() {
     const tlsRootCert = await fs_1.promises.readFile(tlsCertPath);
     const tlsCredentials = grpc.credentials.createSsl(tlsRootCert);

@@ -151,13 +151,13 @@ function NavList() {
       {/* <NavListMenu /> */}
       <Typography
         as="a"
-        href="#"
+        href="/about"
         variant="small"
         color="blue-gray"
         className="font-medium"
       >
         <ListItem className="flex items-center gap-2 py-2 pr-4">
-          Contact Us
+          About Us
         </ListItem>
       </Typography>
     </List>
@@ -194,17 +194,6 @@ export function NavbarWithMegaMenu() {
   }, []);
 
   return (
-
-    // <div className = "navbar flex  min-h-screen flex-col justify-between m-10 items-center">
-  //  <div className="flex justify-between items-center w-full h-50 px-10 text-white bg-black fixed nav">
-    <div>
-      <ul className="flex justify-between m-10 items-center">
-        <div>
-          <Link href="/">
-            <li>Home</li>
-          </Link>
-          
-
     <Navbar className="mx-auto max-w-screen-xl px-4 py-2">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
@@ -217,7 +206,6 @@ export function NavbarWithMegaMenu() {
         </Typography>
         <div className="hidden lg:block">
           <NavList />
-
         </div>
         <div className="hidden gap-2 lg:flex">
           <SessionManagementButtons isInCollapse={false} session={session} />
@@ -241,14 +229,8 @@ export function NavbarWithMegaMenu() {
         <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
           <SessionManagementButtons isInCollapse={true} session={session} />
         </div>
-
-      </ul>
-    </div>
-    // </div>
-
       </Collapse>
     </Navbar>
-
   );
 }
 

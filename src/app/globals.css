@@ -18,7 +18,8 @@
   }
 }
 
-body {
+/* body {
+  background-image: url("/home/patelkiran18/Desktop/Legalchain____/src/app/bg.jpg");
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -26,7 +27,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
+} */
 
 /* body {
   color: rgb(207, 217, 217);
