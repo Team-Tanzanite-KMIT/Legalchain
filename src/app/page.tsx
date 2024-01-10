@@ -22,7 +22,7 @@ import {
 export default function HorizontalCard() {
   return (
 <div className="flex flex-wrap mb-4">
-    <Card className="w-full max-w-[700rem] flex-row bg-#b0bec5 mb-4 mt-8 mx-auto rounded-lg p-8">
+    <Card className="w-full max-w-[900px] flex-row bg-#b0bec5 mb-4 mt-8 mx-auto rounded-lg p-8">
       <CardHeader
         shadow={false}
         floated={false}
@@ -30,11 +30,11 @@ export default function HorizontalCard() {
       >
         <img
           src="/images/img_group665.png"
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover rounded-lg"
         />
       </CardHeader>
       <CardBody>
-      <Typography variant="h6" color="black" className="mb-4 text-6xl font-sans-serif">
+      <Typography variant="h6" color="black" className="mb-4 text-4xl font-sans-serif">
   EVAULT: The future of <span style={{ color: 'red' }}>Legal records</span> keeping
 </Typography>
         
@@ -48,6 +48,8 @@ export default function HorizontalCard() {
         Design and Architecture of the eVault System
       </Typography>  
 
+
+      <div className="w-full md:w-2/3 mx-auto flex-wrap gap-4">
 
       <Card className="w-full md:w-1/3 bg-white mb-4 ">
         
@@ -95,6 +97,10 @@ export default function HorizontalCard() {
         </CardBody>
       </Card>
 
+
+
+     
+
       <Card className="w-full md:w-1/3 bg-white mb-4 ">
         
         <CardHeader
@@ -117,10 +123,15 @@ export default function HorizontalCard() {
         </Typography >
         </CardBody>
       </Card>
+      </div>
+
+
 
       <Typography variant="h4" color="white" className="font-bold text-4xl mb-8 mx-auto">
       What we do
       </Typography>  
+
+
 
      <div className="w-full text-center max-w-[70rem] bg-white mb-4 mt-8 mx-auto rounded-lg p-8">
         <Typography variant="h4" color="black" className="font-bold text-4xl mb-8 mx-auto">

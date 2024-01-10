@@ -103,20 +103,28 @@ export async function POST(request: NextRequest) {
   // console.log(request.method,request.body  ,  isRequestBody(request.body)) 
   if (request.method === "POST" ) {
     const body = await request.json();
-    const { email, password, role } = body;
+    const { email, password } = body;
     try {
       await connect();
 
       const specificUserModel = createSpecificUserModel(role);
+
+      // Check if the user already exists
       const existingUser = await specificUserModel.findOne({ email }).exec();
+      
+
+
+
       if (existingUser) {
         return new NextResponse("Email is already in use", { status: 400 });
       }
       const hashedPassword = await bcrypt.hash(password, 5);
+
+      
       const newUser = new specificUserModel({
         email: email,
         password: hashedPassword,
-        role: role,
+        cases: []
       });
       await newUser.save();
       return new NextResponse("User registered successfully", { status: 200 });

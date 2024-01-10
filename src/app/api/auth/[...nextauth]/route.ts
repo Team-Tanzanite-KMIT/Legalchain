@@ -1,4 +1,4 @@
-import NextAuth, { Account, User as AuthUser } from "next-auth";
+import NextAuth, { Account, AuthOptions, User as AuthUser } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
@@ -6,7 +6,8 @@ import  { User } from "@/models/UserDetails";
 
 import connect from "@/utils/db";
 
-const authOptions: any = {
+const authOptions: AuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       id: "credentials",
@@ -32,7 +33,10 @@ const authOptions: any = {
 
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      httpOptions: {
+        timeout: 45000
+      }
     })
   ],
   callbacks: {
