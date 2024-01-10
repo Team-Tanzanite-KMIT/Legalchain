@@ -46,7 +46,3 @@ export const User: Model<UserDocument> = models.User
   ? (models.User as Model<UserDocument>)
   : model<UserDocument>("User", userSchema);
 
-export const createSpecificUserModel = (role: string): Model<UserDocument> => {
-  return model<UserDocument>(role, userSchema);
-};
-
