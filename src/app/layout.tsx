@@ -7,6 +7,10 @@ import Head from "next/head";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/utils/SessionProvider";
 
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,7 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider session={session}>
-          <div className="mx-auto max-w-5xl text-2xl gap-2 mb-10">
+          <div className="mx-auto  text-2xl gap-2 mb-10">
             <Navbar />
             {children}
           </div>
