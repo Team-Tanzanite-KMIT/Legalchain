@@ -31,7 +31,6 @@ export default function Register() {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
-    const role = e.target[2].value;
 
     if (!isValidEmail(email)) {
       setError('Email is invalid');
@@ -58,12 +57,8 @@ export default function Register() {
       } else if (res.status === 200) {
         setError('');
         // history.push(`/app/dashboards/${role.toLowerCase()}Dashboard`);
-        console.log(role);
-        router.push(`/login`);
-
-        
+        router.push(`/app/dashboard`);
       }
-      
     } catch (error) {
       setError('Error, try again');
       console.log(error);
@@ -75,10 +70,8 @@ export default function Register() {
   }
 
   return (
-    sessionStatus !== "authenticated" && (
-      <div  className="page-background flex max-h-screen flex-col items-center justify-between p-50">
-
-<div className="flex min-h-screen flex-col items-center justify-between p-24">
+    sessionStatus !== 'authenticated' && (
+      <div className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="bg-[#212121] p-8 rounded shadow-md w-96">
           <h1 className="text-4xl text-center font-semibold mb-8 text-white">Register</h1>
           <form onSubmit={handleSubmit}>
@@ -134,9 +127,6 @@ export default function Register() {
           </Link>
         </div>
       </div>
-
-      </div>
-      
     )
   );
 }

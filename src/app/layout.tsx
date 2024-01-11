@@ -7,10 +7,6 @@ import Head from "next/head";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/utils/SessionProvider";
 
-import "@fortawesome/fontawesome-svg-core/styles.css";
-import { config } from "@fortawesome/fontawesome-svg-core";
-config.autoAddCss = false;
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

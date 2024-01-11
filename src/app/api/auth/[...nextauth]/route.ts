@@ -1,16 +1,8 @@
-
-import NextAuth, { Account, AuthOptions, User as AuthUser } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
-import  { User } from "@/models/UserDetails";
-
-// import NextAuth, { Account, AuthOptions, User as AuthUser } from 'next-auth';
-// import GoogleProvider from 'next-auth/providers/google';
-// import CredentialsProvider from 'next-auth/providers/credentials';
-// import bcrypt from 'bcryptjs';
-// import { User } from '@/models/User';
-// >>>>>>> origin/roles
+import NextAuth, { Account, AuthOptions, User as AuthUser } from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import bcrypt from 'bcryptjs';
+import { User } from '@/models/User';
 
 import connect from '@/utils/db';
 
@@ -51,7 +43,7 @@ const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account }: { user: AuthUser; account: Account | null }) {
+    async signIn({ user, account }: { user: AuthUser; account: Account }) {
       if (account?.provider == 'credentials') {
         return true;
       }
