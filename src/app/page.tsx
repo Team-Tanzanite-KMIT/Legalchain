@@ -6,7 +6,7 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-import 'animate.css/animate.min.css';
+// import 'animate.css/animate.min.css';
 export default function HorizontalCard() {
   return (
     <div className="flex flex-wrap mb-4 bg-black w-full">
