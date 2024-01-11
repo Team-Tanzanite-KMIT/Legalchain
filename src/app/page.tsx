@@ -1,38 +1,42 @@
-"use client"
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-  Button,
-} from "@material-tailwind/react";
-import 'animate.css/animate.min.css';
+'use client';
+import { Card, CardHeader, CardBody, Typography, Button } from '@material-tailwind/react';
+// import 'animate.css/animate.min.css';
 export default function HorizontalCard() {
   return (
-    <div className="flex flex-wrap mb-4 bg-black w-full">
+    <div className="flex flex-col mb-4 bg-black w-full">
       <div className="w-full md:max-w-[900px] flex flex-col md:flex-row mb-5 mt-8 mx-auto md:rounded-lg p-8 bg-gray-200">
-  <div className="order-2 w-full md:w-3/5 md:order-1">
-    <Typography variant="h6" color="black" className="mb-4 text-2xl md:text-4xl font-sans-serif">
-      EVAULT: The future of <span style={{ color: 'red' }}>Legal records</span> keeping
-    </Typography>
-    <Typography color="black" className="mb-8 font-sans-serif">
-      Revolutionize legal record keeping - Secure, transparent, accessible for all. Upload, share, track your cases with confidence. The blockchain-powered justice revolution starts here.
-    </Typography>
-  </div>
-  <div className="order-1 w-full md:w-2/5 md:order-2 flex items-center justify-center">
-    <img
-      src="/images/img_group665.png"
-      className="h-4/5 md:h-4/5 w-auto object-cover rounded-lg"
-      alt="Legal Records"
-    />
-  </div>
-</div>
+        <div className="order-2 w-full md:w-3/5 md:order-1">
+          <Typography
+            variant="h6"
+            color="black"
+            className="mb-4 text-2xl md:text-4xl font-sans-serif"
+          >
+            EVAULT: The future of <span style={{ color: 'red' }}>Legal records</span>{' '}
+            keeping
+          </Typography>
+          <Typography color="black" className="mb-8 font-sans-serif">
+            Revolutionize legal record keeping - Secure, transparent, accessible for all.
+            Upload, share, track your cases with confidence. The blockchain-powered
+            justice revolution starts here.
+          </Typography>
+        </div>
+        <div className="order-1 w-full md:w-2/5 md:order-2 flex items-center justify-center">
+          <img
+            src="/images/img_group665.png"
+            className="h-4/5 md:h-4/5 w-auto object-cover rounded-lg"
+            alt="Legal Records"
+          />
+        </div>
+      </div>
 
-      <Typography variant="h4" color="white" className="font-bold text-xl md:text-2xl lg:text-3xl mb-8 mx-auto font-serif">
+      <Typography
+        variant="h4"
+        color="white"
+        className="font-bold text-xl md:text-2xl lg:text-3xl mb-8 mx-auto font-serif"
+      >
         Design and Architecture of the eVault System
       </Typography>
       <div className="flex flex-wrap justify-between ">
-       
         <div className="w-full md:w-[30%] mb-4 p-4 md:flex-grow animate__animated animate__slideInLeft">
           <Card>
             <CardHeader
@@ -49,17 +53,21 @@ export default function HorizontalCard() {
               />
             </CardHeader>
             <CardBody className="text-center">
-              <Typography variant="h6" color="black" className="mb-4 text-2xl font-sans-serif">
+              <Typography
+                variant="h6"
+                color="black"
+                className="mb-4 text-2xl font-sans-serif"
+              >
                 Blockchain Architecture
               </Typography>
               <Typography color="black" className="mb-8 text-xl font-sans-serif">
-                The eVault system consists of a decentralized network of nodes, each of which stores a copy of all legal records.
+                The eVault system consists of a decentralized network of nodes, each of
+                which stores a copy of all legal records.
               </Typography>
             </CardBody>
           </Card>
         </div>
 
-       
         <div className="w-full md:w-[30%] mb-4 p-4 md:flex-grow animate__animated animate__zoomIn">
           <Card>
             <CardHeader
@@ -76,17 +84,21 @@ export default function HorizontalCard() {
               />
             </CardHeader>
             <CardBody className="text-center">
-              <Typography variant="h6" color="black" className="mb-4 text-2xl font-sans-serif">
+              <Typography
+                variant="h6"
+                color="black"
+                className="mb-4 text-2xl font-sans-serif"
+              >
                 Data Storage
               </Typography>
               <Typography color="black" className="mb-8 text-xl font-sans-serif">
-                Legal records are encrypted and stored in blocks, which are then added to the blockchain in a chronological chain.
+                Legal records are encrypted and stored in blocks, which are then added to
+                the blockchain in a chronological chain.
               </Typography>
             </CardBody>
           </Card>
         </div>
 
-        
         <div className="w-full md:w-[30%]  mb-4 p-4 md:flex-grow animate__animated animate__slideInRight">
           <Card>
             <CardHeader
@@ -103,11 +115,16 @@ export default function HorizontalCard() {
               />
             </CardHeader>
             <CardBody className="text-center">
-              <Typography variant="h6" color="black" className="mb-4 text-2xl font-sans-serif">
+              <Typography
+                variant="h6"
+                color="black"
+                className="mb-4 text-2xl font-sans-serif"
+              >
                 Access Control
               </Typography>
               <Typography color="black" className="mb-8 text-xl font-sans-serif">
-                Access to the eVault system is controlled using cryptographic keys, which can be granted or revoked by the network administrator.
+                Access to the eVault system is controlled using cryptographic keys, which
+                can be granted or revoked by the network administrator.
               </Typography>
             </CardBody>
           </Card>
@@ -115,7 +132,11 @@ export default function HorizontalCard() {
       </div>
 
       <div className="w-full text-center max-w-[70rem] bg-grey mb-4 mt-8 mx-auto rounded-lg p-8">
-        <Typography variant="h4" color="white" className="font-bold text-3xl mb-8 mx-auto">
+        <Typography
+          variant="h4"
+          color="white"
+          className="font-bold text-3xl mb-8 mx-auto"
+        >
           What can you do with eVault?
         </Typography>
         <div className="flex flex-wrap justify-between">
@@ -124,7 +145,8 @@ export default function HorizontalCard() {
               UPLOAD DOCUMENTS
             </Typography>
             <Typography color="black" className="text-md text-xl font-normal">
-              Seamlessly upload your legal documents to LegalChain eVault, where they will be stored securely and permanently.
+              Seamlessly upload your legal documents to LegalChain eVault, where they will
+              be stored securely and permanently.
             </Typography>
           </Card>
           <Card className="w-full md:w-[30%] bg-teal-500 mb-4 p-4">
@@ -132,7 +154,8 @@ export default function HorizontalCard() {
               SHARE DOCUMENTS
             </Typography>
             <Typography color="black" className="text-md text-xl font-normal">
-              Collaborate effortlessly by sharing legal documents with authorized stakeholders, promoting efficient communication within your legal team.
+              Collaborate effortlessly by sharing legal documents with authorized
+              stakeholders, promoting efficient communication within your legal team.
             </Typography>
           </Card>
           <Card className="w-full md:w-[30%] bg-gray-200 mb-4 p-4">
@@ -140,12 +163,14 @@ export default function HorizontalCard() {
               TRACK HISTORY
             </Typography>
             <Typography color="black" className="text-md text-xl font-normal">
-              Track the complete history of your legal documents on the blockchain, benefiting from a tamper-resistant and auditable record of all transactions and changes.
+              Track the complete history of your legal documents on the blockchain,
+              benefiting from a tamper-resistant and auditable record of all transactions
+              and changes.
             </Typography>
           </Card>
         </div>
       </div>
-      <footer className="flex w-full md:w-10/10 flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 border-t py-6 text-center md:justify-between bg-white text-white shadow-md" >
+      <footer className="flex w-full md:w-10/10 flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 border-t py-6 text-center md:justify-between bg-white text-white shadow-md">
         <Typography color="black" className="font-normal">
           &copy; 2024 LEGAL CHAIN- All Rights Reserved
         </Typography>
