@@ -2,8 +2,8 @@
 import React from "react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import Card from "@/components/caseCard";
-import CardGrid from "@/components/caseCardGrid";
+import Card from "@/components/caseComponents/caseCard";
+import CardGrid from "@/components/caseComponents/caseCardGrid";
 
 import {
   Typography
