@@ -151,13 +151,13 @@ function NavList() {
       {/* <NavListMenu /> */}
       <Typography
         as="a"
-        href="/about"
+        href="#"
         variant="h5"
         color="blue-gray"
         className="font-medium"
       >
         <ListItem className="flex items-center gap-2 py-2 pr-4">
-          About Us
+          Contact Us
         </ListItem>
       </Typography>
     </List>
@@ -194,7 +194,7 @@ export function NavbarWithMegaMenu() {
   }, []);
 
   return (
-    <Navbar className="mx-auto max-w-screen-5xl px-4 py-2 ">
+    <Navbar className=" mx-auto max-w-screen-xl px-4 py-2 ">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
