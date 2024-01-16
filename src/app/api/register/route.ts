@@ -81,22 +81,10 @@
 
 import connect from '@/utils/db';
 import bcrypt from 'bcryptjs';
-import { User, createSpecificUserModel } from '@/models/User';
+import { User } from '@/models/User';
 import { NextResponse, NextRequest } from 'next/server';
-interface RequestBody {
-  email: string;
-  password: string;
-  role: string;
-}
 
-function isRequestBody(obj: any): obj is RequestBody {
-  return (
-    obj &&
-    typeof obj.email === 'string' &&
-    typeof obj.password === 'string' &&
-    typeof obj.role === 'string'
-  );
-}
+
 export async function POST(request: NextRequest) {
   // console.log(request.method,request.body  ,  isRequestBody(request.body))
   if (request.method === 'POST') {
@@ -118,6 +106,7 @@ export async function POST(request: NextRequest) {
         email: email,
         password: hashedPassword,
         cases: [],
+        docs: [],
       });
       await newUser.save();
 
