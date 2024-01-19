@@ -57,7 +57,7 @@ export default function Register() {
       } else if (res.status === 200) {
         setError('');
         // history.push(`/app/dashboards/${role.toLowerCase()}Dashboard`);
-        router.push(`/app/dashboard`);
+        router.push(`/dashboard`);
       }
     } catch (error) {
       setError('Error, try again');
@@ -72,7 +72,7 @@ export default function Register() {
   return (
     sessionStatus !== 'authenticated' && (
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div className="bg-[#212121] p-8 rounded shadow-md w-96">
+        <div className="bg-[#070705] p-8 rounded shadow-md w-96">
           <h1 className="text-4xl text-center font-semibold mb-8 text-white">Register</h1>
           <form onSubmit={handleSubmit}>
             <input

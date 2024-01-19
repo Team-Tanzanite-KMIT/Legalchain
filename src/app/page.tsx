@@ -10,7 +10,7 @@ import {
 // import 'animate.css/animate.min.css';
 export default function HorizontalCard() {
   return (
-    <div className="flex flex-col mb-4 w-full bg-gradient-to-b from-gray-900 via-gray-800 to-gray-800">
+    <div className="flex flex-col mb-4 w-full bg-black">
       <div className="md:max-w-[1600px] md:max-h-[1200] flex flex-col md:flex-row mb-5 mt-8 mx-auto md:rounded-lg p-8 bg-white ">
   <div className="order-2 w-full md:w-3/5 mb-8 md:mb-0 flex flex-col justify-center">
     <Typography
@@ -38,7 +38,7 @@ export default function HorizontalCard() {
 
       <Typography
         variant="h4"
-        color="white"
+        color="yellow"
         className="font-bold text-xl md:text-2xl lg:text-3xl mb-8 mx-auto font-serif"
       >
         Design and Architecture of the EVault System
@@ -76,7 +76,7 @@ export default function HorizontalCard() {
       <div className="w-full text-center max-w-[70rem] bg-grey mb-4 mt-8 mx-auto rounded-lg p-8">
         <Typography
           variant="h4"
-          color="white"
+          color="yellow"
           className="font-bold text-3xl mb-8 mx-auto"
         >
           What can you do with eVault?

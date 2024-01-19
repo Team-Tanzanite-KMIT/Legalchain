@@ -1,4 +1,5 @@
 {
     "gitlens.currentLine.enabled": false,
-    "gitlens.currentLine.pullRequests.enabled": false
+    "gitlens.currentLine.pullRequests.enabled": false,
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

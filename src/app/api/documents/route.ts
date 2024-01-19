@@ -10,7 +10,14 @@ export async function POST(req: NextRequest) {
     const fileParams: FileParams = await req.json();
     console.log(fileParams)
     await connect()
-    await User.updateOne({ email: fileParams.owner }, { $push: { docs: fileParams.filename.split(".")[0] } });
+    // await User.updateOne({ email: fileParams.owner }, { $push: { docs: fileParams.filename.split(".")[0] } });
+    if(fileParams.owner && fileParams.filename){
+      await User.updateOne({email: fileParams.owner}, {$push: {docs: fileParams.filename.split(".")[0]}});
+
+    }
+    // else{
+    //   return new NextResponse('Invalid fileParams',{status :400});
+    // }
     let { contract, gateway, client } = await chaincode.getContract();
     await chaincode.createFile(contract, fileParams);
     //  console.log(await User.find({ email: fileParams.owner }))
@@ -39,6 +46,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(allDocs, { status: 200 });
   } catch (e) {
+    console.error(e)
     return new NextResponse(`Internal Server Error ${e} `, { status: 500 });
   }
 }
