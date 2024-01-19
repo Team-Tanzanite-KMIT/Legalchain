@@ -314,9 +314,9 @@ export async function Update(contract: Contract, oldID: string, newAsset: Asset,
     await contract.submitTransaction(
       'UpdateFile',
       oldID,
-      (newAsset.Content) ? newAsset.Content : "",
-      (newAsset.Owner) ? newAsset.Owner : "",
-      (newAsset.AccessList) ? JSON.stringify(newAsset.AccessList) : "[]",
+      (newAsset.Content!=undefined) ? newAsset.Content : "",
+      (newAsset.Owner!=undefined) ? newAsset.Owner : "",
+      (newAsset.AccessList!=undefined) ? JSON.stringify(newAsset.AccessList) : "[]",
     );
     // console.log('******** FAILED to return an error');
   } catch (error) {
