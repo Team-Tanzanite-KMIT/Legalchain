@@ -305,21 +305,20 @@ export async function readFileByID(contract: Contract, id: string): Promise<Asse
 /**
  * submitTransaction() will throw an error containing details of any error responses from the smart contract.
  */
-export async function updateNonExistentAsset(contract: Contract): Promise<void> {
+export async function Update(contract: Contract, oldID: string, newAsset: Asset, ): Promise<void> {
   console.log(
-    '\n--> Submit Transaction: UpdateAsset asset70, asset70 does not exist and should return an error'
+    '\n--> Submit Transaction: UpdateAsset'
   );
 
   try {
     await contract.submitTransaction(
-      'UpdateAsset',
-      'asset70',
-      'blue',
-      '5',
-      'Tomoko',
-      '300'
+      'UpdateFile',
+      oldID,
+      (newAsset.Content) ? newAsset.Content : "",
+      (newAsset.Owner) ? newAsset.Owner : "",
+      (newAsset.AccessList) ? JSON.stringify(newAsset.AccessList) : "[]",
     );
-    console.log('******** FAILED to return an error');
+    // console.log('******** FAILED to return an error');
   } catch (error) {
     console.log('*** Successfully caught the error: \n', error);
   }
