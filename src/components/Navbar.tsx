@@ -36,14 +36,20 @@ function NavList({
   sessionStatus: "loading" | "authenticated" | "unauthenticated";
 }) {
   return (
-    <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
+    <List className="mb-6 mt-4 p-0 lg:mb-0 lg:mt-0 lg:flex-row lg:p-1">
       <Typography as="a" href="#" variant="h5" color="blue-gray" className="font-medium">
         <ListItem className="flex items-center gap-2 py-2 pr-4">
           <Link href={"/"}>Home</Link>
         </ListItem>
       </Typography>
       {sessionStatus === "authenticated" && (
-        <Typography as="a" href="#" variant="h5" color="blue-gray" className="font-medium">
+        <Typography
+          as="a"
+          href="#"
+          variant="h5"
+          color="blue-gray"
+          className="font-medium"
+        >
           <ListItem className="flex items-center gap-2 py-2 pr-4">
             <Link href="/dashboard">Dashboard</Link>
           </ListItem>
@@ -79,7 +85,13 @@ function SessionManagementButtons({
         {!session ? <Link href="/login">Log In</Link> : "Sign Out"}
       </Button>
       {!session && (
-        <Button variant="gradient" size="md" className="h-max" color="blue-gray" fullWidth>
+        <Button
+          variant="gradient"
+          size="md"
+          className="h-max"
+          color="blue-gray"
+          fullWidth
+        >
           <Link href="/register">Register</Link>
         </Button>
       )}
@@ -100,7 +112,7 @@ export function NavbarWithMegaMenu() {
   }, []);
 
   return (
-    <Navbar className=" mx-auto max-w-screen-5xl px-4 py-2 bg-white ">
+    <Navbar className=" max-w-screen-5xl mx-auto bg-white px-4 py-2 ">
       <div className="flex items-center justify-between text-blue-gray-800">
         <Typography
           as="a"

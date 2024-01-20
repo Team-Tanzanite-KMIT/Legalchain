@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const LanguageToggle = () => {
   const { i18n } = useTranslation();
@@ -9,9 +9,9 @@ const LanguageToggle = () => {
 
   return (
     <div>
-      <button onClick={() => changeLanguage('en')}>English</button>
-      <button onClick={() => changeLanguage('fr')}>Français</button>
-      <button onClick={() => changeLanguage('de')}>Deutsch</button>
+      <button onClick={() => changeLanguage("en")}>English</button>
+      <button onClick={() => changeLanguage("fr")}>Français</button>
+      <button onClick={() => changeLanguage("de")}>Deutsch</button>
     </div>
   );
 };

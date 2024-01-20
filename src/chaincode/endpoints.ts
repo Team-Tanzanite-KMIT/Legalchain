@@ -1,4 +1,4 @@
-import * as grpc from '@grpc/grpc-js';
+import * as grpc from "@grpc/grpc-js";
 import {
   connect,
   Contract,
@@ -6,67 +6,67 @@ import {
   Identity,
   Signer,
   signers,
-} from '@hyperledger/fabric-gateway';
-import * as crypto from 'crypto';
-import { promises as fs } from 'fs';
-import * as path from 'path';
-import { TextDecoder } from 'util';
+} from "@hyperledger/fabric-gateway";
+import * as crypto from "crypto";
+import { promises as fs } from "fs";
+import * as path from "path";
+import { TextDecoder } from "util";
 
-import { Asset, FileParams } from './types';
+import { Asset, FileParams } from "./types";
 
 // const channelName = envOrDefault('CHANNEL_NAME', 'mychannel');
 // const chaincodeName = envOrDefault('CHAINCODE_NAME', 'filebasic');
 // const mspId = envOrDefault('MSP_ID', 'Org1MSP');
 
-const channelName = 'mychannel';
-const chaincodeName = 'filebasic';
-const mspId = 'Org1MSP';
+const channelName = "mychannel";
+const chaincodeName = "filebasic";
+const mspId = "Org1MSP";
 
 // Path to crypto materials.
 const cryptoPath = envOrDefault(
-  'CRYPTO_PATH',
+  "CRYPTO_PATH",
   path.resolve(
     __dirname,
-    '..',
-    '..',
-    '..',
-    'test-network',
-    'organizations',
-    'peerOrganizations',
-    'org1.example.com'
+    "..",
+    "..",
+    "..",
+    "test-network",
+    "organizations",
+    "peerOrganizations",
+    "org1.example.com"
   )
 );
 
 // Path to user private key directory.
 const keyDirectoryPath = envOrDefault(
-  'KEY_DIRECTORY_PATH',
-  path.resolve(cryptoPath, 'users', 'User1@org1.example.com', 'msp', 'keystore')
+  "KEY_DIRECTORY_PATH",
+  path.resolve(cryptoPath, "users", "User1@org1.example.com", "msp", "keystore")
 );
 
 // Path to user certificate.
 const certPath = envOrDefault(
-  'CERT_PATH',
+  "CERT_PATH",
   path.resolve(
     cryptoPath,
-    'users',
-    'User1@org1.example.com',
-    'msp',
-    'signcerts',
-    'cert.pem'
+    "users",
+    "User1@org1.example.com",
+    "msp",
+    "signcerts",
+    "cert.pem"
   )
 );
 
 // Path to peer tls certificate.
 const tlsCertPath = envOrDefault(
-  'TLS_CERT_PATH',
-  path.resolve(cryptoPath, 'peers', 'peer0.org1.example.com', 'tls', 'ca.crt')
+  "TLS_CERT_PATH",
+  path.resolve(cryptoPath, "peers", "peer0.org1.example.com", "tls", "ca.crt")
 );
 
 // Gateway peer endpoint.
-const peerEndpoint = envOrDefault('PEER_ENDPOINT', 'localhost:7051');
+const peerEndpoint = envOrDefault("PEER_ENDPOINT", "localhost:7051");
 
 // Gateway peer SSL host name override.
-const peerHostAlias = envOrDefault('PEER_HOST_ALIAS', 'peer0.org1.example.com');
+const peerHostAlias = envOrDefault("PEER_HOST_ALIAS", "peer0.org1.example.com");
 
 const utf8Decoder = new TextDecoder();
 const assetId = `Mathematics for Computer Science`;
@@ -111,20 +111,20 @@ async function main(): Promise<void> {
 
     // Create a new asset on the ledger.
     await createFile(contract, {
-      content: 'ss',
-      filename: 'testfile.pdf',
-      owner: 'newOwner',
+      content: "ss",
+      filename: "testfile.pdf",
+      owner: "newOwner",
     });
 
     await getAllFiles(contract);
 
     // Update an existing asset asynchronously.
-    await transferFileAsync(contract, 'ss', 'nextowner');
+    await transferFileAsync(contract, "ss", "nextowner");
 
     await getAllFiles(contract);
 
     // Get the asset details by assetID.
-    await readFileByID(contract, 'ss');
+    await readFileByID(contract, "ss");
 
     // // Update an asset which does not exist.
     // await updateNonExistentAsset(contract)
@@ -185,7 +185,7 @@ async function newGrpcConnection(): Promise<grpc.Client> {
   const tlsRootCert = await fs.readFile(tlsCertPath);
   const tlsCredentials = grpc.credentials.createSsl(tlsRootCert);
   return new grpc.Client(peerEndpoint, tlsCredentials, {
-    'grpc.ssl_target_name_override': peerHostAlias,
+    "grpc.ssl_target_name_override": peerHostAlias,
   });
 }
 
@@ -208,12 +208,12 @@ async function newSigner(): Promise<Signer> {
  */
 export async function initLedger(contract: Contract): Promise<void> {
   console.log(
-    '\n--> Submit Transaction: InitLedger, function creates the initial set of assets on the ledger'
+    "\n--> Submit Transaction: InitLedger, function creates the initial set of assets on the ledger"
   );
 
-  await contract.submitTransaction('InitLedger');
+  await contract.submitTransaction("InitLedger");
 
-  console.log('*** Transaction committed successfully');
+  console.log("*** Transaction committed successfully");
 }
 
 /**
@@ -221,14 +221,14 @@ export async function initLedger(contract: Contract): Promise<void> {
  */
 export async function getAllFiles(contract: Contract): Promise<string> {
   console.log(
-    '\n--> Evaluate Transaction: GetAllAssets, function returns all the current assets on the ledger'
+    "\n--> Evaluate Transaction: GetAllAssets, function returns all the current assets on the ledger"
   );
 
-  const resultBytes = await contract.evaluateTransaction('GetAllFiles');
+  const resultBytes = await contract.evaluateTransaction("GetAllFiles");
 
   const resultJson = utf8Decoder.decode(resultBytes);
   const result = JSON.parse(resultJson);
-  console.log('*** Result:', result);
+  console.log("*** Result:", result);
   return resultJson;
 }
 
@@ -236,13 +236,11 @@ export async function getAllFiles(contract: Contract): Promise<string> {
  * Submit a transaction synchronously, blocking until it has been committed to the ledger.
  */
 export async function createFile(contract: Contract, file: FileParams): Promise<boolean> {
-  console.log(
-    '\n--> Submit Transaction: Createfile, creates new file'
-  );
+  console.log("\n--> Submit Transaction: Createfile, creates new file");
 
-  await contract.submitTransaction('CreateFile', file.filename, file.content, file.owner);
+  await contract.submitTransaction("CreateFile", file.filename, file.content, file.owner);
 
-  console.log('*** Transaction committed successfully');
+  console.log("*** Transaction committed successfully");
 
   return true;
 }
@@ -257,10 +255,10 @@ export async function transferFileAsync(
   newOwner: string
 ): Promise<Asset> {
   console.log(
-    '\n--> Async Submit Transaction: TransferAsset, updates existing asset owner'
+    "\n--> Async Submit Transaction: TransferAsset, updates existing asset owner"
   );
 
-  const commit = await contract.submitAsync('TransferFile', {
+  const commit = await contract.submitAsync("TransferFile", {
     arguments: [id, newOwner],
   });
   const oldOwner = utf8Decoder.decode(commit.getResult());
@@ -268,7 +266,7 @@ export async function transferFileAsync(
   console.log(
     `*** Successfully submitted transaction to transfer ownership from ${oldOwner} to ${newOwner}`
   );
-  console.log('*** Waiting for transaction commit');
+  console.log("*** Waiting for transaction commit");
 
   const status = await commit.getStatus();
   if (!status.successful) {
@@ -277,19 +275,19 @@ export async function transferFileAsync(
     );
   }
 
-  console.log('*** Transaction committed successfully');
+  console.log("*** Transaction committed successfully");
 
   return JSON.parse(oldOwner);
 }
 
 export async function readFileByID(contract: Contract, id: string): Promise<Asset> {
-  console.log('\n--> Evaluate Transaction: ReadAsset, function returns asset attributes');
+  console.log("\n--> Evaluate Transaction: ReadAsset, function returns asset attributes");
 
-  const resultBytes = await contract.evaluateTransaction('ReadFile', id);
+  const resultBytes = await contract.evaluateTransaction("ReadFile", id);
 
   const resultJson = utf8Decoder.decode(resultBytes);
   const result: Asset = JSON.parse(resultJson);
-  console.log('*** Result:', result);
+  console.log("*** Result:", result);
 
   return result;
 }
@@ -305,22 +303,24 @@ export async function readFileByID(contract: Contract, id: string): Promise<Asse
 /**
  * submitTransaction() will throw an error containing details of any error responses from the smart contract.
  */
-export async function Update(contract: Contract, oldID: string, newAsset: Asset, ): Promise<void> {
-  console.log(
-    '\n--> Submit Transaction: UpdateAsset'
-  );
+export async function Update(
+  contract: Contract,
+  oldID: string,
+  newAsset: Asset
+): Promise<void> {
+  console.log("\n--> Submit Transaction: UpdateAsset");
 
   try {
     await contract.submitTransaction(
-      'UpdateFile',
+      "UpdateFile",
       oldID,
-      (newAsset.Content!=undefined) ? newAsset.Content : "",
-      (newAsset.Owner!=undefined) ? newAsset.Owner : "",
-      (newAsset.AccessList!=undefined) ? JSON.stringify(newAsset.AccessList) : "[]",
+      newAsset.Content != undefined ? newAsset.Content : "",
+      newAsset.Owner != undefined ? newAsset.Owner : "",
+      newAsset.AccessList != undefined ? JSON.stringify(newAsset.AccessList) : "[]"
     );
     // console.log('******** FAILED to return an error');
   } catch (error) {
-    console.log('*** Successfully caught the error: \n', error);
+    console.log("*** Successfully caught the error: \n", error);
   }
 }
 

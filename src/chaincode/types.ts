@@ -1,23 +1,21 @@
-
 export interface Asset {
-    fileType: string;
+  fileType: string;
 
-    ID: string;
+  ID: string;
 
-    hash: string;
+  hash: string;
 
-    Owner: string;
+  Owner: string;
 
-    AccessList: string[];
+  AccessList: string[];
 
-    Content: string;
+  Content: string;
 }
 
 export interface FileParams {
+  filename: string;
 
-    filename: string;
+  content: string;
 
-    content: string;
-
-    owner: string;
+  owner: string;
 }

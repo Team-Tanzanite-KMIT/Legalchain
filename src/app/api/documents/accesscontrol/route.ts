@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     const fileAsset = await chaincode.readFileByID(contract, fileParams.filename);
     fileAsset.AccessList = fileParams.AccessList;
 
-    return new NextResponse("AccessLisr updates", { status: 200 });
+    return new NextResponse("AccessList updated", { status: 200 });
   } catch (e) {
     return new NextResponse(`Internal Server Error ${e}`, { status: 500 });
   }

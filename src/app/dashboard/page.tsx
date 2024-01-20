@@ -24,10 +24,12 @@ export default async function Dashboard() {
     cases.details.push(cases.details[0]);
   }
 
-  var headColor = "#c9d7e3"
+  var headColor = "#c9d7e3";
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between px-24 w-max gap-5 py-8">
-      <Typography variant="h2" className={`text-[${headColor}]`}>Active Cases</Typography>
+    <div className="flex min-h-screen w-max flex-col items-center justify-between gap-5 px-24 py-8">
+      <Typography variant="h2" className={`text-[${headColor}]`}>
+        Active Cases
+      </Typography>
 
       {/* { (cases.details.length > 0) && <Card userCase={cases.details[0]} />} */}
 

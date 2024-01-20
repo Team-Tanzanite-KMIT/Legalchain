@@ -6,8 +6,8 @@ const nextConfig = {
       use: [
         options.defaultLoaders.babel,
         {
-          loader: 'node-loader',
-        //   options: pluginOptions.options,
+          loader: "node-loader",
+          //   options: pluginOptions.options,
         },
       ],
     });
@@ -16,4 +16,4 @@ const nextConfig = {
   },
 };
 
-module.exports =  nextConfig;
+module.exports = nextConfig;

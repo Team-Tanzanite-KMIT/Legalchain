@@ -1,19 +1,21 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { Asset, FileParams } from '@/chaincode/types';
-import * as chaincode from '@/chaincode/endpoints';
-import { User } from '@/models/User';
-import connect from '@/utils/db';
+import { NextRequest, NextResponse } from "next/server";
+import { Asset, FileParams } from "@/chaincode/types";
+import * as chaincode from "@/chaincode/endpoints";
+import { User } from "@/models/User";
+import connect from "@/utils/db";
 // import {readFileByID} from "chaincode/endpoints"
 
 export async function POST(req: NextRequest) {
   try {
     const fileParams: FileParams = await req.json();
-    console.log(fileParams)
-    await connect()
+    console.log(fileParams);
+    await connect();
     // await User.updateOne({ email: fileParams.owner }, { $push: { docs: fileParams.filename.split(".")[0] } });
-    if(fileParams.owner && fileParams.filename){
-      await User.updateOne({email: fileParams.owner}, {$push: {docs: fileParams.filename.split(".")[0]}});
-
+    if (fileParams.owner && fileParams.filename) {
+      await User.updateOne(
+        { email: fileParams.owner },
+        { $push: { docs: fileParams.filename.split(".")[0] } }
+      );
     }
     // else{
     //   return new NextResponse('Invalid fileParams',{status :400});
@@ -21,7 +23,7 @@ export async function POST(req: NextRequest) {
     let { contract, gateway, client } = await chaincode.getContract();
     await chaincode.createFile(contract, fileParams);
     //  console.log(await User.find({ email: fileParams.owner }))
-    return new NextResponse('Document Uploaded', { status: 200 });
+    return new NextResponse("Document Uploaded", { status: 200 });
   } catch (e) {
     return new NextResponse(`Internal Server Error ${e} `, { status: 500 });
   }
@@ -29,8 +31,8 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    const email: string = req.nextUrl.searchParams.get('email')!;
-    const requestedOwnerName = req.nextUrl.searchParams.get('requestedowner');
+    const email: string = req.nextUrl.searchParams.get("email")!;
+    const requestedOwnerName = req.nextUrl.searchParams.get("requestedowner");
 
     connect();
     let { contract, gateway, client } = await chaincode.getContract();
@@ -46,7 +48,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(allDocs, { status: 200 });
   } catch (e) {
-    console.error(e)
+    console.error(e);
     return new NextResponse(`Internal Server Error ${e} `, { status: 500 });
   }
 }

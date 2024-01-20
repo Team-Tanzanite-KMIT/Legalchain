@@ -1,20 +1,20 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { signIn, useSession } from 'next-auth/react';
+"use client";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Register() {
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const router = useRouter();
 
-  const [role, setRole] = useState<'client' | 'lawyer' | 'judge' | undefined>(undefined);
+  const [role, setRole] = useState<"client" | "lawyer" | "judge" | undefined>(undefined);
 
   const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {
-    if (sessionStatus === 'authenticated') {
-      router.replace('/dashboard');
+    if (sessionStatus === "authenticated") {
+      router.replace("/dashboard");
     }
   }, [sessionStatus]);
 
@@ -33,18 +33,18 @@ export default function Register() {
     const password = e.target[1].value;
 
     if (!isValidEmail(email)) {
-      setError('Email is invalid');
+      setError("Email is invalid");
       return;
     } else if (!password || password.length < 4) {
-      setError('Password is invalid');
+      setError("Password is invalid");
       return;
     }
 
     try {
-      const res = await fetch('/api/register', {
-        method: 'POST',
+      const res = await fetch("/api/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: email,
@@ -53,37 +53,37 @@ export default function Register() {
         }),
       });
       if (res.status === 400) {
-        setError('This email is already registered');
+        setError("This email is already registered");
       } else if (res.status === 200) {
-        setError('');
+        setError("");
         // history.push(`/app/dashboards/${role.toLowerCase()}Dashboard`);
         router.push(`/dashboard`);
       }
     } catch (error) {
-      setError('Error, try again');
+      setError("Error, try again");
       console.log(error);
     }
   };
 
-  if (sessionStatus === 'loading') {
+  if (sessionStatus === "loading") {
     return <h1>Loading...</h1>;
   }
 
   return (
-    sessionStatus !== 'authenticated' && (
+    sessionStatus !== "authenticated" && (
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div className="bg-[#070705] p-8 rounded shadow-md w-96">
-          <h1 className="text-4xl text-center font-semibold mb-8 text-white">Register</h1>
+        <div className="w-96 rounded bg-[#070705] p-8 shadow-md">
+          <h1 className="mb-8 text-center text-4xl font-semibold text-white">Register</h1>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
+              className="mb-4 w-full rounded border border-gray-300 px-3 py-2 text-black focus:border-blue-400 focus:text-black focus:outline-none"
               placeholder="Email"
               required
             />
             <input
               type="password"
-              className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
+              className="mb-4 w-full rounded border border-gray-300 px-3 py-2 text-black focus:border-blue-400 focus:text-black focus:outline-none"
               placeholder="Password"
               required
             />
@@ -104,23 +104,23 @@ export default function Register() {
 
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+              className="w-full rounded bg-blue-500 py-2 text-white hover:bg-blue-600"
             >
               Register
             </button>
 
-            <p className="text-red-600 text-[16px] mb-4 text-center">{error && error}</p>
-            <div className="text-center text-gray-500 mt-4">- OR -</div>
+            <p className="mb-4 text-center text-[16px] text-red-600">{error && error}</p>
+            <div className="mt-4 text-center text-gray-500">- OR -</div>
             <button
-              onClick={() => signIn('google')}
-              className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+              onClick={() => signIn("google")}
+              className="w-full rounded bg-blue-500 py-2 text-white hover:bg-blue-600"
             >
               Sign in with Google
             </button>
           </form>
-          <div className="text-center text-gray-500 mt-4">- OR -</div>
+          <div className="mt-4 text-center text-gray-500">- OR -</div>
           <Link
-            className="block text-center text-blue-500 hover:underline mt-2"
+            className="mt-2 block text-center text-blue-500 hover:underline"
             href="/login"
           >
             Login with an existing account
