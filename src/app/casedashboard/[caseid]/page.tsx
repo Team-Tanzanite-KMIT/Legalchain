@@ -2,38 +2,27 @@
 
 import Image from "next/image";
 
-import React, { ChangeEvent, useState } from "react";
-import {
-  Card,
-  Typography,
-  List,
-  ListItem,
-  ListItemPrefix,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@/components/MtComponents";
-import {
-  PresentationChartBarIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-} from "@heroicons/react/24/solid";
-import {
-  ChevronRightIcon,
-  ChevronDownIcon,
-  CubeTransparentIcon,
-} from "@heroicons/react/24/outline";
+import { ChangeEvent } from "react";
+import { Card, Typography } from "@/components/MtComponents";
+
 import { getServerSession } from "next-auth";
+import SidebarWithLogo from "@/components/sidebar";
+
+import getLoginDetails from "@/components/getLoginDetails";
 
 interface FileUploadProps {
   onFileUpload?: (base64: string | null) => void;
 }
 
+// const getLoginDetails = async () => {
+//   return await getServerSession();
+// };
+
 const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
   // const [fileBase64, setFileBase64] = useState<string | null>(null);
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    let session = await getServerSession();
+    let session = await getLoginDetails();
 
     if (!event.target.files || event.target.files.length === 0) {
       return; // User canceled file selection
@@ -46,24 +35,6 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
       session?.user?.email!
     );
 
-    // var readerr = file.stream().getReader();
-
-    // console.log((await readerr.read()).value?.toString())
-    // console.log(Buffer.from(await file.arrayBuffer()).toString("base64"));
-    // if (file) {
-    //   const reader = new FileReader();
-    //   reader.onloadend = () => {
-    //     const result = reader.result as string;
-    //     setFileBase64(result.split(",")[1]);
-
-    //     if (onFileUpload) {
-    //       onFileUpload(result.split(",")[1]);
-    //     }
-
-    //     // sendFileToApi(result.split(",")[1]);
-    //   };
-    //   reader.readAsDataURL(file);
-    // }
   };
 
   const sendFileToApi = (filename: string, base64Data: string, email: string) => {
@@ -92,7 +63,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
       .catch((error) => {
         console.error("Error sending file to API:", error);
       });
-  }
+  };
 
   return (
     <div className="my-8 flex flex-col items-center justify-center">
@@ -114,85 +85,6 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
     </div>
   );
 };
-
-export function SidebarWithLogo() {
-  const [open, setOpen] = React.useState(0);
-
-  const handleOpen = (value: React.SetStateAction<number>) => {
-    setOpen(open === value ? 0 : value);
-  };
-
-  return (
-    <Card className="h-screen w-screen max-w-[20rem] bg-deep-orange-50 p-4 shadow-xl shadow-blue-gray-900/5 ">
-      <div className="mb-2 flex items-center gap-4 p-4">
-        <img src="/logo.png" alt="brand" className="h-10 w-10" />
-        <Typography color="black" className="text-2xl font-bold">
-          Lawyer
-        </Typography>
-      </div>
-      <List>
-        <Accordion
-          open={open === 1}
-          icon={
-            <ChevronDownIcon
-              strokeWidth={2.5}
-              className={`mx-auto h-4 w-4 transition-transform ${
-                open === 1 ? "rotate-180" : ""
-              }`}
-            />
-          }
-        >
-          <ListItem className="p-0" selected={open === 1}>
-            <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3">
-              <ListItemPrefix>
-                <PresentationChartBarIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              <Typography color="blue-gray" className="mr-auto font-normal">
-                Dashboard
-              </Typography>
-            </AccordionHeader>
-          </ListItem>
-          <AccordionBody className="py-1">
-            <List className="p-0">
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Uploaded Documents
-              </ListItem>
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Shared Documents
-              </ListItem>
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Recent Documents
-              </ListItem>
-            </List>
-          </AccordionBody>
-        </Accordion>
-
-        <hr className="my-2 border-blue-gray-50" />
-        <ListItem>
-          <ListItemPrefix>
-            <UserCircleIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Profile
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <Cog6ToothIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Settings
-        </ListItem>
-      </List>
-    </Card>
-  );
-}
 
 export default function caseDashboard() {
   const cases = ["Case 1", "Case 2", "Case 3"];
