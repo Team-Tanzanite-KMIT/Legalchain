@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Asset, FileParams } from "@/chaincode/types";
 import * as chaincode from "@/chaincode/endpoints";
 import { User } from "@/models/User";
 import connect from "@/utils/db";
+
+interface FileParams {
+  filename: string;
+  owner: string;
+}
 
 interface AccessControlParams extends FileParams {
   AccessList: string[];
@@ -27,7 +31,7 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    const fileParams: FileParams = await req.json();
+    const fileParams: FileParams = req.nextUrl.searchParams as any;
     console.log(fileParams);
 
     await connect();
