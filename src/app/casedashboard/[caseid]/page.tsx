@@ -199,7 +199,7 @@ export default function caseDashboard() {
             Upcoming events
           </Typography>
 
-          <Typography>
+          <>
             <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-20">
               {cases.map((c, i) => (
                 <li>
@@ -215,7 +215,7 @@ export default function caseDashboard() {
                 </li>
               ))}
             </ul>
-          </Typography>
+          </>
         </Card>
 
         <div className="mt-8 flex w-full flex-1 flex-col items-center justify-start gap-[42px] md:mt-0">
