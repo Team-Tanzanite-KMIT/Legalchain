@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import Image from "next/image";
 
@@ -30,7 +30,7 @@ interface FileUploadProps {
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
-  const [fileBase64, setFileBase64] = useState<string | null>(null);
+  // const [fileBase64, setFileBase64] = useState<string | null>(null);
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     let session = await getServerSession();
@@ -110,7 +110,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
       >
         <div className="text-center text-sm font-medium text-blue-700">Upload</div>
       </label>
-      {fileBase64}
+      {/* {fileBase64} */}
     </div>
   );
 };
