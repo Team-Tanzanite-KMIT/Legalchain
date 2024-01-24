@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import Image from "next/image";
 
@@ -12,7 +12,7 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
-} from "@material-tailwind/react";
+} from "@/components/MtComponents";
 import {
   PresentationChartBarIcon,
   UserCircleIcon,
@@ -23,6 +23,7 @@ import {
   ChevronDownIcon,
   CubeTransparentIcon,
 } from "@heroicons/react/24/outline";
+import { getServerSession } from "next-auth";
 
 interface FileUploadProps {
   onFileUpload?: (base64: string | null) => void;
@@ -31,26 +32,41 @@ interface FileUploadProps {
 const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
   const [fileBase64, setFileBase64] = useState<string | null>(null);
 
-  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    let session = await getServerSession();
+
+    if (!event.target.files || event.target.files.length === 0) {
+      return; // User canceled file selection
+    }
     const file = event.target.files?.[0];
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        setFileBase64(result.split(",")[1]);
+    sendFileToApi(
+      file.name,
+      Buffer.from(await file.arrayBuffer()).toString("base64"),
+      session?.user?.email!
+    );
 
-        if (onFileUpload) {
-          onFileUpload(result.split(",")[1]);
-        }
+    // var readerr = file.stream().getReader();
 
-        sendFileToApi(result.split(",")[1]);
-      };
-      reader.readAsDataURL(file);
-    }
-  }
+    // console.log((await readerr.read()).value?.toString())
+    // console.log(Buffer.from(await file.arrayBuffer()).toString("base64"));
+    // if (file) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = () => {
+    //     const result = reader.result as string;
+    //     setFileBase64(result.split(",")[1]);
 
-  function sendFileToApi(base64Data: string) {
+    //     if (onFileUpload) {
+    //       onFileUpload(result.split(",")[1]);
+    //     }
+
+    //     // sendFileToApi(result.split(",")[1]);
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
+  };
+
+  const sendFileToApi = (filename: string, base64Data: string, email: string) => {
     const apiEndpoint = "/api/documents";
 
     fetch(apiEndpoint, {
@@ -60,8 +76,8 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
       },
       body: JSON.stringify({
         content: base64Data,
-        filename: "test.pdf",
-        owner: "r@g.com",
+        filename: filename,
+        owner: email,
       }),
     })
       .then((response) => {
@@ -94,13 +110,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
       >
         <div className="text-center text-sm font-medium text-blue-700">Upload</div>
       </label>
-      {fileBase64 && (
-        <Image
-          src={`data:image/png;base64,${fileBase64}`}
-          alt="Uploaded"
-          className="mt-3 max-w-full"
-        />
-      )}
+      {fileBase64}
     </div>
   );
 };
@@ -188,7 +198,7 @@ export default function caseDashboard() {
   const cases = ["Case 1", "Case 2", "Case 3"];
 
   const handleFileUpload = (base64: string | null) => {
-    console.log("Uploaded file ", base64);
+    // console.log("Uploaded file ", base64);
   };
   return (
     <div className="flex">
