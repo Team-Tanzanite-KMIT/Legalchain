@@ -23,6 +23,7 @@ import {
   ChevronDownIcon,
   CubeTransparentIcon,
 } from "@heroicons/react/24/outline";
+
 interface FileUploadProps {
   onFileUpload?: (base64: string | null) => void;
 }
@@ -30,7 +31,7 @@ interface FileUploadProps {
 const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
   const [fileBase64, setFileBase64] = useState<string | null>(null);
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
 
     if (file) {
@@ -47,9 +48,9 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
       };
       reader.readAsDataURL(file);
     }
-  };
+  }
 
-  const sendFileToApi = (base64Data: string) => {
+  function sendFileToApi(base64Data: string) {
     const apiEndpoint = "/api/documents";
 
     fetch(apiEndpoint, {
@@ -75,7 +76,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
       .catch((error) => {
         console.error("Error sending file to API:", error);
       });
-  };
+  }
 
   return (
     <div className="my-8 flex flex-col items-center justify-center">
@@ -256,8 +257,4 @@ export default function caseDashboard() {
       </div>
     </div>
   );
-}
-
-function setFileBase64(arg0: string) {
-  throw new Error("Function not implemented.");
 }

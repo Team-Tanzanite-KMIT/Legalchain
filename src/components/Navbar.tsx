@@ -30,16 +30,22 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import { Session } from "next-auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 function NavList({
   sessionStatus,
 }: {
   sessionStatus: "loading" | "authenticated" | "unauthenticated";
 }) {
+  const router = useRouter();
+
   return (
     <List className="mb-6 mt-4 p-0 lg:mb-0 lg:mt-0 lg:flex-row lg:p-1">
       <Typography as="a" href="#" variant="h5" color="blue-gray" className="font-medium">
-        <ListItem className="flex items-center gap-2 py-2 pr-4">
-          <Link href={"/"}>Home</Link>
+        <ListItem
+          className="flex items-center gap-2 py-2 pr-4"
+          onClick={() => router.push("/")}
+        >
+          Home
         </ListItem>
       </Typography>
       {sessionStatus === "authenticated" && (
@@ -50,8 +56,11 @@ function NavList({
           color="blue-gray"
           className="font-medium"
         >
-          <ListItem className="flex items-center gap-2 py-2 pr-4">
-            <Link href="/dashboard">Dashboard</Link>
+          <ListItem
+            className="flex items-center gap-2 py-2 pr-4"
+            onClick={() => router.push("/dashboard")}
+          >
+            Dashboard
           </ListItem>
         </Typography>
       )}
