@@ -15,7 +15,6 @@ interface FileUploadProps {
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
-
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     let session = await getLoginDetails();
 
@@ -30,7 +29,6 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
       // @ts-ignore
       session?.user?.email!
     );
-
   };
 
   const sendFileToApi = (filename: string, base64Data: string, email: string) => {
@@ -122,8 +120,6 @@ export default function caseDashboard() {
             </h1>
             <FileUpload onFileUpload={handleFileUpload} />
           </div>
-
-          
         </div>
       </div>
     </div>

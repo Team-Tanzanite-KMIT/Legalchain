@@ -19,9 +19,10 @@ export async function POST(req: NextRequest) {
 
     await connect();
     await User.findOne({ email: fileParams.owner });
-    let { contract, gateway, client } = await chaincode.getContract();
+    let { contract } = await chaincode.getContract();
     const fileAsset = await chaincode.readFileByID(contract, fileParams.filename);
     fileAsset.AccessList = fileParams.AccessList;
+    await chaincode.Update(contract, fileParams.filename, fileAsset);
 
     return new NextResponse("AccessList updated", { status: 200 });
   } catch (e) {
@@ -31,18 +32,20 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    const fileParams: FileParams = req.nextUrl.searchParams as any;
-    console.log(fileParams);
+    const fileParams: FileParams = {
+      filename: req.nextUrl.searchParams.get("filename")!,
+      owner: req.nextUrl.searchParams.get("owner")!,
+    };
 
     await connect();
-    let { contract, gateway, client } = await chaincode.getContract();
-    const fileAsset = await chaincode.readFileByID(contract, fileParams.filename);
+    let { contract } = await chaincode.getContract();
 
-    NextResponse.json(
+    return new NextResponse(
       JSON.stringify({
         filename: fileParams.filename,
         owner: fileParams.owner,
-        AccessList: fileAsset.AccessList,
+        AccessList: (await chaincode.readFileByID(contract, fileParams.filename))
+          .AccessList,
       }),
       { status: 200 }
     );

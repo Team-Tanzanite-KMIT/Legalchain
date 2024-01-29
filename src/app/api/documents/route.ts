@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     const fileParams: FileParams = await req.json();
     console.log(fileParams);
     await connect();
-    let existingFiles = (await User.findOne({email: fileParams.owner}))?.docs!
+    let existingFiles = (await User.findOne({ email: fileParams.owner }))?.docs!;
     // await User.updateOne({ email: fileParams.owner }, { $push: { docs: fileParams.filename.split(".")[0] } });
     // if(existingFiles.find(fileParams.filename))
     if (fileParams.owner && fileParams.filename) {
