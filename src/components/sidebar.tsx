@@ -20,6 +20,7 @@ import {
   ChevronDownIcon,
   CubeTransparentIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 export default function SidebarWithLogo() {
   const [open, setOpen] = useState(0);
@@ -81,14 +82,15 @@ export default function SidebarWithLogo() {
             </List>
           </AccordionBody>
         </Accordion>
-
+        <Link href="/profile">
+          <ListItem>
+            <ListItemPrefix>
+              <UserCircleIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Profile
+          </ListItem>
+        </Link>
         <hr className="my-2 border-blue-gray-50" />
-        <ListItem>
-          <ListItemPrefix>
-            <UserCircleIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Profile
-        </ListItem>
         <ListItem>
           <ListItemPrefix>
             <Cog6ToothIcon className="h-5 w-5" />
