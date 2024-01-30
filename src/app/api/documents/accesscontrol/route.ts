@@ -40,13 +40,12 @@ export async function GET(req: NextRequest) {
     await connect();
     let { contract } = await chaincode.getContract();
 
-    return new NextResponse(
-      JSON.stringify({
+    return NextResponse.json(
+      {
         filename: fileParams.filename,
         owner: fileParams.owner,
-        AccessList: (await chaincode.readFileByID(contract, fileParams.filename))
-          .AccessList,
-      }),
+        AccessList: (await chaincode.readFileByID(contract, fileParams.filename)).AccessList,
+      },
       { status: 200 }
     );
   } catch (e) {

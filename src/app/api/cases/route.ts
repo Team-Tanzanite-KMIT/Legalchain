@@ -41,6 +41,11 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   try {
     const email: string = req.nextUrl.searchParams.get("email")!;
+
+    if (email === null) {
+      return NextResponse.json({ error: "email is required" }, { status: 400 });
+    }
+
     await connect();
     const user = await User.findOne({ email });
     const allCases = user?.cases!;
