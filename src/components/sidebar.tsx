@@ -61,24 +61,30 @@ export default function SidebarWithLogo() {
           </ListItem>
           <AccordionBody className="py-1">
             <List className="p-0">
+            <Link href="/uploaded_documents">
               <ListItem>
                 <ListItemPrefix>
                   <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                 </ListItemPrefix>
                 Uploaded Documents
               </ListItem>
+              </Link>
+              <Link href="/share">
               <ListItem>
                 <ListItemPrefix>
                   <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                 </ListItemPrefix>
                 Shared Documents
               </ListItem>
+              </Link>
+              <Link href="/recent_documents">
               <ListItem>
                 <ListItemPrefix>
                   <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                 </ListItemPrefix>
                 Recent Documents
               </ListItem>
+              </Link>
             </List>
           </AccordionBody>
         </Accordion>
