@@ -2,7 +2,6 @@
 
 import {
   Card as MaterialCard,
-  // CardHeader,
   CardBody,
   Typography,
 } from "@/components/MtComponents";
@@ -15,7 +14,7 @@ export default function Card({ userCase }: { userCase: caseAttr }): React.ReactN
 
   return (
     <MaterialCard
-      className="w-96 border-[1.5px] border-[#363636] bg-[#18212f] duration-150 hover:-translate-y-2"
+      className="w-96 border-[1.5px] border-[#363636] bg-[#18212f] duration-150 hover:-translate-y-2 cursor-pointer"
       onClick={() => router.push(`/casedashboard/${userCase.caseID}`)}
     >
       <CardBody>

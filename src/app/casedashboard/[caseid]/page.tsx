@@ -8,7 +8,10 @@ import { Card, Typography } from "@/components/MtComponents";
 import { getServerSession } from "next-auth";
 import SidebarWithLogo from "@/components/sidebar";
 
+import { PdfCard } from "@/components/pdfCard";
+
 import getLoginDetails from "@/components/getLoginDetails";
+import { Asset } from "@/chaincode/types";
 
 interface FileUploadProps {
   onFileUpload?: (base64: string | null) => void;
@@ -113,7 +116,7 @@ export default function caseDashboard() {
           </>
         </Card>
 
-        <div className="mt-8 flex w-full flex-1 flex-col items-center justify-start gap-[42px] md:mt-0">
+        <div className="mt-8 flex w-full flex-1 flex-col items-start justify-start gap-[42px] md:mt-0">
           <div className="mt-[13px] flex w-full flex-row items-center justify-between md:gap-10">
             <h1 className="text-[28px] font-bold sm:text-2xl md:text-[26px]">
               Attached Docs
@@ -121,6 +124,11 @@ export default function caseDashboard() {
             <FileUpload onFileUpload={handleFileUpload} />
           </div>
         </div>
+        <PdfCard
+          pdfInfo={
+            { ID: "casedoc1", AccessList: ["user1", "user2"], fileType: "pdf" } as Asset
+          }
+        ></PdfCard>
       </div>
     </div>
   );

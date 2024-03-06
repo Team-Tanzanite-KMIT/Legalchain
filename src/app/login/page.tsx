@@ -81,6 +81,13 @@ export default function Login() {
             <p className="mb-4 text-[16px] text-red-600">{error && error}</p>
           </form>
 
+          <button
+            onClick={() => signIn("google")}
+            className="w-full rounded bg-blue-500 py-2 text-white hover:bg-blue-600"
+          >
+            SignIn With Google
+          </button>
+
           <div className="mt-4 text-center text-gray-500">- OR -</div>
           <Link
             className="mt-2 block text-center text-blue-500 hover:underline"

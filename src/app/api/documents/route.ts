@@ -19,12 +19,9 @@ export async function POST(req: NextRequest) {
         { $push: { docs: fileParams.filename.split(".")[0] } }
       );
     }
-    // else{
-    //   return new NextResponse('Invalid fileParams',{status :400});
-    // }
+    
     let { contract, gateway, client } = await chaincode.getContract();
     await chaincode.createFile(contract, fileParams);
-    //  console.log(await User.find({ email: fileParams.owner }))
     return new NextResponse("Document Uploaded", { status: 200 });
   } catch (e) {
     return new NextResponse(`Internal Server Error ${e} `, { status: 500 });
